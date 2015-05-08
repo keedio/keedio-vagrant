@@ -1,0 +1,9 @@
+{ "blueprint":"kafka-blueprint",
+  "host_groups":[
+    { "name":"host_group_1",
+      "hosts":[
+        { "fqdn":"ambari1.ambari.keedio.org"}
+        ] 
+    }
+  ] 
+}

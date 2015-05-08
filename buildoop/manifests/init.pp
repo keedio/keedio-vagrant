@@ -1,0 +1,45 @@
+ include base
+ 
+  node default {
+  class { 'groovy': 
+    }
+  package { "fuse-devel": ensure => "installed"}
+  package { "fuse-libs": ensure => "installed"}
+  package { "cmake": ensure => "installed"}
+  package { "lzo-devel": ensure => "installed"}
+  package { "openssl-devel": ensure => "installed"}
+  package { "createrepo": ensure => "installed"}
+  package { "yum-utils": ensure => "installed"}
+  package { "httpd": ensure => "installed"}
+  package { "jdk": 
+             ensure => "installed",
+             require => Yumrepo["keedio-1.2"]
+          }
+  file {"/etc/profile.d/buildoop.sh":
+         ensure  => "present",
+         content => "export JAVA_HOME=/usr/java/jdk1.7.0_51\nexport PATH=/usr/java/jdk1.7.0_51/bin:\$PATH\nexport MAVEN_OPTS='-Xms512m -Xmx1024m'"
+       }
+  cron { "createrepo":
+         ensure  => present,
+         command => "createrepo --simple-md-filenames /vagrant/repo/keedio-1.2/",
+         user    => 'root',
+         hour    => 14,
+         minute  => 0,
+         require => Package["createrepo"]
+       }
+  file_line{'repo_root':
+            path =>'/etc/httpd/conf/httpd.conf',
+            line =>'DocumentRoot "/var/www/html/repo"' }
+  file_line{'repo_root2':
+            path =>'/etc/httpd/conf/httpd.conf',
+            line => '<Directory "/var/www/html">' }
+
+  service { 'httpd':
+      ensure => running,
+      enable => true,
+      require => Package["httpd"],
+      subscribe => File_line["repo_root","repo_root2"]
+    } 
+  }  
+
+
