@@ -1,0 +1,3 @@
+[submodule "ambari1/files/keedio-stacks"]
+	path = ambari1/files/keedio-stacks
+	url = https://github.com/keedio/keedio-stacks.git
