@@ -68,7 +68,10 @@ for repo in repolist:
         url=os.popen(command).read()
         if url == '':
                print "Repository empty, nothing to sync!"
-               continue
+               command="yum -v repolist keedio-1.2-updates | grep Repo-baseurl | cut -c 16-200"
+               url=os.popen(command).read()
+               url=url.strip()
+               print url
         url=urlparse(url)
         path=url.path
         path= os.path.dirname(path)

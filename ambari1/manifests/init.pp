@@ -45,7 +45,7 @@
   file{'/etc/ambari-server/conf/ambari.properties':
   ensure => file,
   source => 'puppet:///files/ambari.properties',
-  require => Package["ambari-server","ambari-agent","ambari-log4j"]
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Exec["ambari-setup"]]
   }
   file{'/usr/lib/ambari-server/web/javascripts/app.js.gz':
   ensure => file,
@@ -62,5 +62,13 @@
   target => '/vagrant/files/keedio-stacks/KEEDIO/',
   require => Package["ambari-server","ambari-agent","ambari-log4j"]
   }
+  exec { "ambari-setup":
+  command => "ambari-server setup -s",
+  cwd     => "/var/tmp",
+  creates => "/var/lib/pgsql/data/postgresql.conf",
+  path    => ["/usr/bin", "/usr/sbin","/sbin","/bin"],
+  require => Package["ambari-server","ambari-agent","ambari-log4j"]
+  }
+
   }
 

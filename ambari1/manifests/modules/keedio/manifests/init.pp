@@ -6,7 +6,7 @@ class  keedio  {
       enabled => 1,
       gpgcheck => 0
   }
-  yumrepo { "keedio-1.2i-updates":
+  yumrepo { "keedio-1.2-updates":
       baseurl => "http://repo.keedio.org/openbus/1.2/updates",
       descr => "keedio-updates-repository",
       enabled => 1,
