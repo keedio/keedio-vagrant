@@ -16,7 +16,7 @@ For now, make sure you disconnect from the caligula VPN
 Download the keedio-vagrant stack
 
 ```
-git clone https://github.com/keedio/keedio-vagrant.git
+git clone --recursive https://github.com/keedio/keedio-vagrant.git
 
 cd  keedio-vagrant
 ```
