@@ -4,3 +4,4 @@
 [submodule "ambari2/files/keedio-stacks"]
 	path = ambari2/files/keedio-stacks
 	url = https://github.com/keedio/keedio-stacks.git
+	branch = ambari2
