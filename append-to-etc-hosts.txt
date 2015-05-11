@@ -42,6 +42,31 @@
 192.168.65.108 c6508.ambari.apache.org c6508
 192.168.65.109 c6509.ambari.apache.org c6509
 192.168.65.110 c6510.ambari.apache.org c6510
+
+# Keedio hosts
+192.168.65.101 master.ambari.keedio.org master
+192.168.65.102 ambari1.ambari.keedio.org ambari1
+192.168.65.103 ambari2.ambari.keedio.org ambari2
+192.168.65.104 ambari3.ambari.keedio.org ambari3
+192.168.65.105 ambari4.ambari.keedio.org ambari4
+192.168.65.106 ambari5.ambari.keedio.org ambari5
+192.168.65.107 ambari6.ambari.keedio.org ambari6
+192.168.65.108 ambari7.ambari.keedio.org ambari7
+192.168.65.109 ambari8.ambari.keedio.org ambari8
+192.168.65.110 ambari9.ambari.keedio.org ambari9
+192.168.66.101 master.ambari2.keedio.org master
+192.168.66.102 ambari21.ambari2.keedio.org ambari21
+192.168.66.103 ambari22.ambari2.keedio.org ambari22
+192.168.66.104 ambari23.ambari2.keedio.org ambari23
+192.168.66.105 ambari24.ambari2.keedio.org ambari24
+192.168.66.106 ambari25.ambari2.keedio.org ambari25
+192.168.66.107 ambari26.ambari2.keedio.org ambari26
+192.168.66.108 ambari27.ambari2.keedio.org ambari27
+192.168.66.109 ambari28.ambari2.keedio.org ambari28
+192.168.66.110 ambari29.ambari2.keedio.org ambari29
+
+192.168.67.101 buildoop.keedio.org buildoop
+
 # suse 11 hosts
 192.168.11.101 suse1101.ambari.apache.org suse1101
 192.168.11.102 suse1102.ambari.apache.org suse1102
