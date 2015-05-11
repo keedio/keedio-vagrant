@@ -29,15 +29,22 @@
        }
   file_line{'repo_root':
             path =>'/etc/httpd/conf/httpd.conf',
-            line =>'DocumentRoot "/var/www/html/repo"' }
+            line =>'DocumentRoot "/var/www/html/repo"',
+            match => '^DocumentRoot *',
+            require => Package['httpd'] }
   file_line{'repo_root2':
             path =>'/etc/httpd/conf/httpd.conf',
-            line => '<Directory "/var/www/html">' }
+            line => '<Directory "/var/www/html/repo">',
+            match => '^\<Directory "/var/www/html"\>', 
+            require => Package['httpd']}
+  file {'/var/www/html/repo':
+         ensure => 'directory',
+         require => Package['httpd']}
 
   service { 'httpd':
       ensure => running,
       enable => true,
-      require => Package["httpd"],
+      require => [Package["httpd"], File["/var/www/html/repo"]],
       subscribe => File_line["repo_root","repo_root2"]
     } 
   }  
