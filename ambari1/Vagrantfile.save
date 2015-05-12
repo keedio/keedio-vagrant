@@ -7,7 +7,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "puppetlabs/centos-6.6-64-puppet"
+  config.vm.box = "centos6.5"
 
   # Fixes changes from https://github.com/mitchellh/vagrant/pull/4707
   config.ssh.insert_key = false
@@ -18,36 +18,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # CentOS 6.5 x86_64
   config.vm.box_url = "https://atlas.hashicorp.com/puppetlabs/boxes/centos-6.6-64-puppet"
 
-  file_to_disk = '/tmp/disk1.vdi'
-
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", 3072] # RAM allocated to each VM
-    if ARGV[0] == "up" && ! File.exist?("/tmp/disk1.vdi")
-    vb.customize [
-      'createhd',
-      '--filename', "/tmp/disk1.vdi",
-      '--format', 'VDI',
-      # 100GB
-      '--size', 100 * 1024
-    ]
+  end
 
-    vb.customize [
-      'storageattach', :id,
-      '--storagectl', 'IDE Controller',
-      '--port', 1, '--device', 0,
-      '--type', 'hdd', '--medium',
-      file_to_disk
-    ]
-    end
-  end
-  if ARGV[0] == "up" && ! File.exist?("/tmp/disk1.vdi")
-    # Run script to map new disk
-    config.vm.provision :shell, :path =>"bootstrap-disk.sh"
-    # Run script to increase swap memory
-    # config.vm.provision "bash", path: "increase_swap.sh"
-  end
   config.vm.provision :shell, :path => "bootstrap.sh"
-  
+
   config.vm.define :master do |master|
     # uncomment the line below to set up the ambari dev environment
     # master.vm.provision :shell, :path => "dev-bootstrap.sh"
