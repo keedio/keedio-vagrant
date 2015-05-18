@@ -72,7 +72,7 @@
   service { "ambari-server":
   ensure => "running",
   require => [Package["ambari-server"],Exec["ambari-setup"]],
-  subscribe => File["/etc/ambari-agent/conf/ambari-agent.ini"]
+  subscribe => File["/etc/ambari-server/conf/ambari.properties"]
   }
 
   }
