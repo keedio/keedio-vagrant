@@ -62,7 +62,7 @@ File { owner => 0, group => 0, mode => 0644 }
   mode   =>  0600
   }
   service { "iptables":
-  ensure => "running",
+  ensure => "stopped",
   }
   
 }
