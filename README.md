@@ -36,6 +36,13 @@ vagrant ssh buildoop
 sudo su
 python /vagrant/sync-localrepo.py
 ```
+Installing third party proprietary libraries
+
+```
+/vagrant/opsec-setup.sh
+```
+
+
 Answer Yes to all the repositories that you want to replicate. At the moment keedio-1.2 and keedio-1.2-updates. 
 This will take several minutes. 
 When the process is complete you can check the status of your repo by pointing your browser to http://buildoop/openbus/
