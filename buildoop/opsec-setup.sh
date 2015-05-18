@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd /tmp
-
+mkdir -p /opt/Externallibs/OPSEC/
 ask() {
     # http://djm.me/ask
     while true; do
@@ -88,32 +88,12 @@ then
 fi
 
 echo "Installing the SDK libraries in /usr/lib"
-cp pkg_rel/lib/release.dynamic/* /usr/lib
+cp -r pkg_rel /opt/Externallibs/OPSEC/.
+
 err=$?
 if [ $err -ne 0 ]
 then
     echo "Installation of the SDK libraries failed  with error code $err"
-    exit $err
-fi
-
-tar zxf RoamAdmin_linux30.tar.gz
-if [ $err -ne 0 ]
-then
-    echo "Untar of tools Roadadmin failed  with error code $err"
-    exit $err
-fi
-
-tar zxf OpsecSicUtils_linux30.tar.gz
-if [ $err -ne 0 ]
-then
-    echo "Untar of OpsecSicUtils failed  with error code $err"
-    exit $err
-fi
-
-cp linux30/* /usr/bin/.
-if [ $err -ne 0 ]
-then
-    echo "Installation of SDK tools failed  with error code $err"
     exit $err
 fi
 

@@ -11,6 +11,11 @@
   package { "createrepo": ensure => "installed"}
   package { "yum-utils": ensure => "installed"}
   package { "httpd": ensure => "installed"}
+  package { "git": ensure => "installed"}
+  package { "rpm-build": ensure => "installed"}
+  package { "glibc-devel.i686": ensure => "installed"}
+  package { "elfutils-libelf.i686": ensure => "installed"}
+  package { "compat-libstdc++-33.i686": ensure => "installed"}
   package { "jdk": 
              ensure => "installed",
              require => Yumrepo["keedio-1.2"]
