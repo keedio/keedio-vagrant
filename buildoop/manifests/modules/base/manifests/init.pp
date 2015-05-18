@@ -78,5 +78,8 @@ File { owner => 0, group => 0, mode => 0644 }
   source => 'puppet:///files/.ssh/id_rsa',
   owner  => 'root',
   mode   =>  0600
-  }  
+  } 
+  service { "iptables":
+  ensure => "stopped",
+  } 
 }

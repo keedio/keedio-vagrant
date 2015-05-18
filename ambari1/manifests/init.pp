@@ -69,6 +69,11 @@
   path    => ["/usr/bin", "/usr/sbin","/sbin","/bin"],
   require => Package["ambari-server","ambari-agent","ambari-log4j"]
   }
+  service { "ambari-server":
+  ensure => "running",
+  require => [Package["ambari-server"],Exec["ambari-setup"]],
+  subscribe => File["/etc/ambari-server/conf/ambari.properties"]
+  }
 
   }
 
