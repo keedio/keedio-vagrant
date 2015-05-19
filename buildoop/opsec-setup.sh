@@ -87,7 +87,7 @@ then
     exit $err
 fi
 
-echo "Installing the SDK libraries in /usr/lib"
+echo "Installing the SDK libraries"
 cp -r pkg_rel /opt/Externallibs/OPSEC/.
 
 err=$?

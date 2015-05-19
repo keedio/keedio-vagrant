@@ -5,6 +5,7 @@
     }
   package { "fuse-devel": ensure => "installed"}
   package { "fuse-libs": ensure => "installed"}
+  package { "fuse": ensure => "installed"}
   package { "cmake": ensure => "installed"}
   package { "lzo-devel": ensure => "installed"}
   package { "openssl-devel": ensure => "installed"}
