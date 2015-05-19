@@ -5,12 +5,18 @@
     }
   package { "fuse-devel": ensure => "installed"}
   package { "fuse-libs": ensure => "installed"}
+  package { "fuse": ensure => "installed"}
   package { "cmake": ensure => "installed"}
   package { "lzo-devel": ensure => "installed"}
   package { "openssl-devel": ensure => "installed"}
   package { "createrepo": ensure => "installed"}
   package { "yum-utils": ensure => "installed"}
   package { "httpd": ensure => "installed"}
+  package { "git": ensure => "installed"}
+  package { "rpm-build": ensure => "installed"}
+  package { "glibc-devel.i686": ensure => "installed"}
+  package { "elfutils-libelf.i686": ensure => "installed"}
+  package { "compat-libstdc++-33.i686": ensure => "installed"}
   package { "jdk": 
              ensure => "installed",
              require => Yumrepo["keedio-1.2"]
