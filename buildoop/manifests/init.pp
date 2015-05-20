@@ -17,6 +17,7 @@
   package { "glibc-devel.i686": ensure => "installed"}
   package { "elfutils-libelf.i686": ensure => "installed"}
   package { "compat-libstdc++-33.i686": ensure => "installed"}
+  package { "gcc-c++": ensure => "installed"}
   package { "jdk": 
              ensure => "installed",
              require => Yumrepo["keedio-1.2"]
