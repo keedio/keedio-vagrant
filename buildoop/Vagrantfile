@@ -31,59 +31,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     buildoop.vm.network :private_network, ip: "192.168.67.101"
   end
 
-  config.vm.define :ambari1 do |ambari1|
-    ambari1.vm.hostname = "ambari1.ambari.keedio.org"
-    ambari1.vm.network :private_network, ip: "192.168.65.102"
-  end
-
-  config.vm.define :ambari2 do |ambari2|
-    ambari2.vm.hostname = "ambari2.ambari.keedio.org"
-    ambari2.vm.network :private_network, ip: "192.168.65.103"
-  end
-
-  config.vm.define :ambari3 do |ambari3|
-    ambari3.vm.hostname = "ambari3.ambari.keedio.org"
-    ambari3.vm.network :private_network, ip: "192.168.65.104"
-  end
-
-  config.vm.define :ambari4 do |ambari4|
-    ambari4.vm.hostname = "ambari4.ambari.keedio.org"
-    ambari4.vm.network :private_network, ip: "192.168.65.105"
-  end
-
-  config.vm.define :ambari5 do |ambari5|
-    ambari5.vm.hostname = "ambari5.ambari.keedio.org"
-    ambari5.vm.network :private_network, ip: "192.168.65.106"
-  end
-
-  config.vm.define :ambari6 do |ambari6|
-    ambari6.vm.hostname = "ambari6.ambari.keedio.org"
-    ambari6.vm.network :private_network, ip: "192.168.65.107"
-  end
-
-  config.vm.define :ambari7 do |ambari7|
-    ambari7.vm.hostname = "ambari7.ambari.keedio.org"
-    ambari7.vm.network :private_network, ip: "192.168.65.108"
-  end
-
-  config.vm.define :ambari8 do |ambari8|
-    ambari8.vm.hostname = "ambari8.ambari.keedio.org"
-    ambari8.vm.network :private_network, ip: "192.168.65.109"
-  end
-
-  config.vm.define :ambari9 do |ambari9|
-    ambari9.vm.hostname = "ambari9.ambari.keedio.org"
-    ambari9.vm.network :private_network, ip: "192.168.65.110"
-  end
-
-
-
-
-
-
-
-
-
 
 
 
