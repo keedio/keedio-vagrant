@@ -61,6 +61,7 @@ File { owner => 0, group => 0, mode => 0644 }
   package { "yum": ensure => "installed" }
   package { "wget": ensure => "installed" }
   package { "vim-enhanced": ensure => "installed" }
+  package { "yum-plugin-priorities": ensure => "installed" }
   package { "apache-maven":
     ensure => "installed",
     require => Yumrepo[ "epel-apache-maven" ]
