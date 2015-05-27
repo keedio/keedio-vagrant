@@ -16,6 +16,12 @@ File { owner => 0, group => 0, mode => 0644 }
       enabled => 1,
       gpgcheck => 0
   }
+ yumrepo { "epel":
+      baseurl => "http://mirror.de.leaseweb.net/epel/6/x86_64",
+      descr => "epel",
+      enabled => 1,
+      gpgcheck => 0
+  }
   yumrepo { "keedio-1.2-updates":
       baseurl => "http://repo.keedio.org/openbus/1.2/updates",
       descr => "keedio-updates-repository",
@@ -62,6 +68,10 @@ File { owner => 0, group => 0, mode => 0644 }
   package { "wget": ensure => "installed" }
   package { "vim-enhanced": ensure => "installed" }
   package { "yum-plugin-priorities": ensure => "installed" }
+  package { "protobuf-compiler": 
+    ensure => "installed",
+    require => Yumrepo[ "epel" ]
+  }
   package { "apache-maven":
     ensure => "installed",
     require => Yumrepo[ "epel-apache-maven" ]
