@@ -13,6 +13,7 @@
   package { "yum-utils": ensure => "installed"}
   package { "httpd": ensure => "installed"}
   package { "git": ensure => "installed"}
+  package { "redhat-rpm-config": ensure => "installed"}
   package { "rpm-build": ensure => "installed"}
   package { "glibc-devel.i686": ensure => "installed"}
   package { "elfutils-libelf.i686": ensure => "installed"}
