@@ -4,8 +4,19 @@ class { 'timezone':
     timezone => 'Europe/Madrid',
 }
 
-group { "puppet":
+user { "apache":
+ ensure => "present", 
+ uid => 48, 
+ gid => 48,
+ require => Group['apache']
+}
+
+group { 'puppet':
   ensure => "present",
+ }
+group { 'apache':
+  ensure => "present",
+  gid => 48
  }
 
 File { owner => 0, group => 0, mode => 0644 }
@@ -47,6 +58,7 @@ File { owner => 0, group => 0, mode => 0644 }
   package { "yum": ensure => "installed" }
   package { "wget": ensure => "installed" }
   package { "vim-enhanced": ensure => "installed" }
+  package { "yum-plugin-priorities": ensure => "installed" }
 
   file{'/root/.ssh/authorized_keys':
   ensure => file,

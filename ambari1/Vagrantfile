@@ -4,6 +4,9 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+
+vagrant_root=File.dirname(__FILE__)
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # Every Vagrant virtual environment requires a box to build off of.
@@ -37,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network :private_network, ip: "192.168.65.101"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]
-    file_name="disks/"+node.vm.hostname
+    file_name=vagrant_root+"/disks/"+node.vm.hostname
     if ARGV[0] == "up" && ! File.exist?(file_name)
          vb.customize ['createhd','--filename', file_name,'--format', 'VDI','--size', 50 * 1024]
          vb.customize ['storageattach', :id,'--storagectl', 'IDE Controller','--port', 1, '--device', 0,'--type', 'hdd', '--medium',file_name]
@@ -52,7 +55,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network :private_network, ip: "192.168.65.102"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
-    file_name="disks/"+node.vm.hostname
+    file_name=vagrant_root+"/disks/"+node.vm.hostname
     if ARGV[0] == "up" && ! File.exist?(file_name)
          vb.customize ['createhd','--filename', file_name,'--format', 'VDI','--size', 50 * 1024]
          vb.customize ['storageattach', :id,'--storagectl', 'IDE Controller','--port', 1, '--device', 0,'--type', 'hdd', '--medium',file_name]
@@ -67,7 +70,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network :private_network, ip: "192.168.65.103"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
-    file_name="disks/"+node.vm.hostname
+    file_name=vagrant_root+"/disks/"+node.vm.hostname
     if ARGV[0] == "up" && ! File.exist?(file_name)
          vb.customize ['createhd','--filename', file_name,'--format', 'VDI','--size', 50 * 1024]
          vb.customize ['storageattach', :id,'--storagectl', 'IDE Controller','--port', 1, '--device', 0,'--type', 'hdd', '--medium',file_name]
@@ -82,7 +85,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network :private_network, ip: "192.168.65.104"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
-    file_name="disks/"+node.vm.hostname
+    file_name=vagrant_root+"/disks/"+node.vm.hostname
     if ARGV[0] == "up" && ! File.exist?(file_name)
          vb.customize ['createhd','--filename', file_name,'--format', 'VDI','--size', 50 * 1024]
          vb.customize ['storageattach', :id,'--storagectl', 'IDE Controller','--port', 1, '--device', 0,'--type', 'hdd', '--medium',file_name]
@@ -97,7 +100,7 @@ config.vm.define :ambari4 do |node|
     node.vm.network :private_network, ip: "192.168.65.105"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
-    file_name="disks/"+node.vm.hostname
+    file_name=vagrant_root+"/disks/"+node.vm.hostname
     if ARGV[0] == "up" && ! File.exist?(file_name)
          vb.customize ['createhd','--filename', file_name,'--format', 'VDI','--size', 50 * 1024]
          vb.customize ['storageattach', :id,'--storagectl', 'IDE Controller','--port', 1, '--device', 0,'--type', 'hdd', '--medium',file_name]
@@ -112,7 +115,7 @@ config.vm.define :ambari5 do |node|
     node.vm.network :private_network, ip: "192.168.65.106"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
-    file_name="disks/"+node.vm.hostname
+    file_name=vagrant_root+"/disks/"+node.vm.hostname
     if ARGV[0] == "up" && ! File.exist?(file_name)
          vb.customize ['createhd','--filename', file_name,'--format', 'VDI','--size', 50 * 1024]
          vb.customize ['storageattach', :id,'--storagectl', 'IDE Controller','--port', 1, '--device', 0,'--type', 'hdd', '--medium',file_name]
@@ -127,7 +130,7 @@ config.vm.define :ambari6 do |node|
     node.vm.network :private_network, ip: "192.168.65.107"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
-    file_name="disks/"+node.vm.hostname
+    file_name=vagrant_root+"/disks/"+node.vm.hostname
     if ARGV[0] == "up" && ! File.exist?(file_name)
          vb.customize ['createhd','--filename', file_name,'--format', 'VDI','--size', 50 * 1024]
          vb.customize ['storageattach', :id,'--storagectl', 'IDE Controller','--port', 1, '--device', 0,'--type', 'hdd', '--medium',file_name]
@@ -142,7 +145,7 @@ config.vm.define :ambari7 do |node|
     node.vm.network :private_network, ip: "192.168.65.108"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
-    file_name="disks/"+node.vm.hostname
+    file_name=vagrant_root+"/disks/"+node.vm.hostname
     if ARGV[0] == "up" && ! File.exist?(file_name)
          vb.customize ['createhd','--filename', file_name,'--format', 'VDI','--size', 50 * 1024]
          vb.customize ['storageattach', :id,'--storagectl', 'IDE Controller','--port', 1, '--device', 0,'--type', 'hdd', '--medium',file_name]
@@ -157,7 +160,7 @@ config.vm.define :ambari8 do |node|
     node.vm.network :private_network, ip: "192.168.65.109"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
-    file_name="disks/"+node.vm.hostname
+    file_name=vagrant_root+"/disks/"+node.vm.hostname
     if ARGV[0] == "up" && ! File.exist?(file_name)
          vb.customize ['createhd','--filename', file_name,'--format', 'VDI','--size', 50 * 1024]
          vb.customize ['storageattach', :id,'--storagectl', 'IDE Controller','--port', 1, '--device', 0,'--type', 'hdd', '--medium',file_name]
@@ -172,7 +175,7 @@ config.vm.define :ambari9 do |node|
     node.vm.network :private_network, ip: "192.168.65.110"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
-    file_name="disks/"+node.vm.hostname
+    file_name=vagrant_root+"/disks/"+node.vm.hostname
     if ARGV[0] == "up" && ! File.exist?(file_name)
          vb.customize ['createhd','--filename', file_name,'--format', 'VDI','--size', 50 * 1024]
          vb.customize ['storageattach', :id,'--storagectl', 'IDE Controller','--port', 1, '--device', 0,'--type', 'hdd', '--medium',file_name]
