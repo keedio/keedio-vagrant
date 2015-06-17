@@ -3,6 +3,7 @@
  include local-repo 
 
   node default {
+  include keedio-develop
   package { "ambari-agent":
     ensure => "installed",
     require => Yumrepo[ "ambari-1.x" ]
@@ -26,6 +27,7 @@
 
   node 'master' {
   include keedio
+  include keedio-develop
   package { "ambari-server":
     ensure => "installed",
     require => Yumrepo[ "ambari-1.x","Updates-ambari-1.x" ]
