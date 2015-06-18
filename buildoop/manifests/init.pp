@@ -55,6 +55,14 @@
       require => [Package["httpd"], File["/var/www/html/repo"]],
       subscribe => File_line["repo_root","repo_root2"]
     } 
-  }  
+  package { "protobuf-compiler": 
+    ensure => "installed",
+    require => Yumrepo[ "epel" ]
+  }
+  package { "apache-maven":
+    ensure => "installed",
+    require => Yumrepo[ "epel-apache-maven" ]
+  }
+}
 
 
