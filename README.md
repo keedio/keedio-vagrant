@@ -9,8 +9,10 @@ This is a Vagrant based test environment, designed to test the integration of th
 ##Preliminary steps
 
 Install Vagrant and Virtualbox before starting. 
-
-For now, make sure you disconnect from the caligula VPN 
+Make sure you install the vagrant snapshotting plugin for virtualbox 
+```
+vagrant plugin install vagrant-vbox-snapshot
+```
 
 
 Download the keedio-vagrant stack
@@ -27,7 +29,7 @@ cat  append-to-etc-hosts.txt  >> /etc/hosts
 ```
 Start the local repositories 
 ```
-cd buildoop 
+cd  ambari1
 vagrant up buildoop
 ```
 Enter in the VM and become root 
@@ -47,5 +49,16 @@ Answer Yes to all the repositories that you want to replicate. At the moment kee
 This will take several minutes. 
 When the process is complete you can check the status of your repo by pointing your browser to http://buildoop/openbus/
  
+Exit form the buildoop VM
+```
+exit
+```
+
+You can now start your ambari cluster
+
+```
+vagrant up master ambari1 ambari2
+```
+
 
 
