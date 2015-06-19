@@ -6,5 +6,5 @@
 	url = https://github.com/keedio/keedio-stacks.git
 	branch = ambari2
 [submodule "buildoop/buildoop"]
-	path = buildoop/buildoop
+	path = ambari1/buildoop
 	url = https://github.com/keedio/buildoop.git
