@@ -38,23 +38,23 @@ vagrant ssh buildoop
 sudo su
 python /vagrant/sync-localrepo.py
 ```
+
+Answer "Yes" to all the repositories that you want to replicate. At the moment keedio-1.2 and keedio-1.2-updates. 
+This will take several minutes. 
+When the process is complete you can check the status of your repo by pointing your browser to http://buildoop/openbus/
+
 Installing third party proprietary libraries
 
 ```
 /vagrant/opsec-setup.sh
 ```
-
-
-Answer "Yes" to all the repositories that you want to replicate. At the moment keedio-1.2 and keedio-1.2-updates. 
-This will take several minutes. 
-When the process is complete you can check the status of your repo by pointing your browser to http://buildoop/openbus/
  
 Exit from the buildoop VM
 ```
 exit
 ```
 
-You can now start your ambari cluster
+You can now start your ambari cluster, you should always start the master machine, and a number of slaves (ambari1, ambari2, ambari3...)
 
 ```
 vagrant up master ambari1 ambari2
