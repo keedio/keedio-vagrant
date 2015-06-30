@@ -4,7 +4,6 @@
 
   node default {
   include local-repo
-  include keedio-develop
   package { "ambari-agent":
     ensure => "installed",
     require => Yumrepo[ "ambari-1.x" ]
@@ -29,7 +28,6 @@
   node 'master' {
   include local-repo
   include keedio
-  include keedio-develop
   package { "ambari-server":
     ensure => "installed",
     require => Yumrepo[ "ambari-1.x","Updates-ambari-1.x" ]
@@ -51,11 +49,11 @@
   source => 'puppet:///files/ambari.properties',
   require => [Package["ambari-server","ambari-agent","ambari-log4j"],Exec["ambari-setup"]]
   }
-  #file{'/usr/lib/ambari-server/web/javascripts/app.js.gz':
-  #ensure => file,
-  #source => 'puppet:///files/app.js.gz',
-  #require => Package["ambari-server","ambari-agent","ambari-log4j"]
-  #}
+  file{'/usr/lib/ambari-server/web/javascripts/app.js.gz':
+  ensure => file,
+  source => 'puppet:///files/app.js.gz',
+  require => Package["ambari-server","ambari-agent","ambari-log4j"]
+  }
   file { '/var/lib/ambari-server/resources/stacks/FLUME':
   ensure => 'link',
   target => '/vagrant/files/keedio-stacks/FLUME/',
