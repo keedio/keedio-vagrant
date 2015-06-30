@@ -48,6 +48,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  config.vm.define :buildoop do |node|
+    # uncomment the line below to set up the ambari dev environment
+    # node.vm.provision :shell, :path => "dev-bootstrap.sh"
+    node.vm.hostname = "buildoop.ambari.keedio.org"
+    node.vm.network :private_network, ip: "192.168.65.201"
+    node.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--memory", 1024]
+    file_name=vagrant_root+"/disks/"+node.vm.hostname
+    if ARGV[0] == "up" && ! File.exist?(file_name)
+         vb.customize ['createhd','--filename', file_name,'--format', 'VDI','--size', 50 * 1024]
+         vb.customize ['storageattach', :id,'--storagectl', 'IDE Controller','--port', 1, '--device', 0,'--type', 'hdd', '--medium',file_name]
+    end
+    end
+  end
+
   config.vm.define :ambari1 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
