@@ -81,7 +81,6 @@
  
   node buildoop {
   include keedio
-  include keedio-develop
   class { 'groovy': 
     }
   package { "fuse-devel": ensure => "installed"}
