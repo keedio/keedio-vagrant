@@ -25,6 +25,13 @@ File { owner => 0, group => 0, mode => 0644 }
    content => "Welcome to your Vagrant-built virtual machine!
                Managed by Puppet.\n"
  }
+ yumrepo { "epel":
+      baseurl => "http://mirror.de.leaseweb.net/epel/6/x86_64",
+      descr => "epel",
+      enabled => 1,
+      gpgcheck => 0
+  }
+
   yumrepo { "ambari-1.x":
       baseurl => "http://public-repo-1.hortonworks.com/ambari/centos6/1.x/GA",
       descr => "Ambari",
