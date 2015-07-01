@@ -10,7 +10,7 @@ vagrant_root=File.dirname(__FILE__)
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "puppetlabs/centos-6.6-64-puppet"
+  config.vm.box = "keedio/keedio-base"
 
   # Fixes changes from https://github.com/mitchellh/vagrant/pull/4707
   config.ssh.insert_key = false
@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # doesn't already exist on the user's system.
 
   # CentOS 6.5 x86_64
-  config.vm.box_url = "https://atlas.hashicorp.com/puppetlabs/boxes/centos-6.6-64-puppet"
+  config.vm.box_url = "https://atlas.hashicorp.com/keedio/boxes/keedio-base"
 
 
   config.vm.provider :virtualbox do |vb|
