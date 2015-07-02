@@ -4,6 +4,7 @@
 
   node default {
   include local-repo
+  include ipa::client 
   package { "ambari-agent":
     ensure => "installed",
     require => Yumrepo[ "ambari-1.x" ]
@@ -28,6 +29,8 @@
   node 'master' {
   include local-repo
   include keedio
+
+  include ipa::server
   package { "ambari-server":
     ensure => "installed",
     require => Yumrepo[ "ambari-1.x","Updates-ambari-1.x" ]
