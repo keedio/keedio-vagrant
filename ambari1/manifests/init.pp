@@ -68,7 +68,7 @@
   require => Package["ambari-server","ambari-agent","ambari-log4j"]
   }
   exec { "ambari-setup":
-  command => "ambari-server setup -s",
+  command => "ambari-server setup -s --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar",
   cwd     => "/var/tmp",
   creates => "/var/lib/pgsql/data/postgresql.conf",
   path    => ["/usr/bin", "/usr/sbin","/sbin","/bin"],
