@@ -3,17 +3,22 @@
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
-
+require 'vagrant-openstack-provider'
 
 vagrant_root=File.dirname(__FILE__)
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "keedio/keedio-base"
+  config.vm.box = "dummy"
+  config.ssh.pty = true
+  config.ssh.username = "root"
+  #config.ssh.insert_key = true
+  config.ssh.private_key_path = './files/.ssh/id_rsa'
+
 
   # Fixes changes from https://github.com/mitchellh/vagrant/pull/4707
-  config.ssh.insert_key = false
+  #config.ssh.insert_key = false
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -22,9 +27,24 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = "https://atlas.hashicorp.com/keedio/boxes/keedio-base"
 
 
-  config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", 3072] # RAM allocated to each VM
+ # config.vm.provider :virtualbox do |vb|
+ #   vb.customize ["modifyvm", :id, "--memory", 3072] # RAM allocated to each VM
+ # end
+
+#os.openstack_network_url = 'http://quantum.cloud.cediant.es:9696'
+  config.vm.provider :openstack do |os|
+    os.openstack_auth_url = 'https://keystone.cloud.cediant.es:5000/v2.0'
+    os.openstack_image_url = 'http://glance.cloud.cediant.es:9292'
+    os.openstack_compute_url = 'https://nova.cloud.cediant.es:8774/v2/e61d7c1d3038421b8e0ff15b1b5c406e'
+    os.username           = 'acomisso'
+    os.password           = 'Happy78.A'
+    os.tenant_name        = 'acomisso'
+    os.flavor             = 'cediant.medium'
+    os.image              = 'centos6-vagrant'
+    os.floating_ip_pool   = 'public_network'
+    os.public_key_path   = './files/.ssh/id_rsa.pub'
   end
+
   if ARGV[0] == "up" 
 #    # Run script to map new disk
     config.vm.provision :shell, :path =>"bootstrap-disk.sh"
@@ -36,7 +56,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define :master do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "master.ambari.keedio.org"
+    node.vm.hostname = "master.cediant.keedio.org"
     node.vm.network :private_network, ip: "192.168.65.101"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]
@@ -51,7 +71,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define :buildoop do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "buildoop.ambari.keedio.org"
+    node.vm.hostname = "buildoop.cediant.keedio.org"
     node.vm.network :private_network, ip: "192.168.65.201"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 1024]
@@ -66,7 +86,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define :ambari1 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari1.ambari.keedio.org"
+    node.vm.hostname = "ambari1.cediant.keedio.org"
     node.vm.network :private_network, ip: "192.168.65.102"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
@@ -81,7 +101,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define :ambari2 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari2.ambari.keedio.org"
+    node.vm.hostname = "ambari2.cediant.keedio.org"
     node.vm.network :private_network, ip: "192.168.65.103"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
@@ -96,7 +116,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
  config.vm.define :ambari3 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari3.ambari.keedio.org"
+    node.vm.hostname = "ambari3.cediant.keedio.org"
     node.vm.network :private_network, ip: "192.168.65.104"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
@@ -111,7 +131,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 config.vm.define :ambari4 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari4.ambari.keedio.org"
+    node.vm.hostname = "ambari4.cediant.keedio.org"
     node.vm.network :private_network, ip: "192.168.65.105"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
@@ -126,7 +146,7 @@ config.vm.define :ambari4 do |node|
 config.vm.define :ambari5 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari5.ambari.keedio.org"
+    node.vm.hostname = "ambari5.cediant.keedio.org"
     node.vm.network :private_network, ip: "192.168.65.106"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
@@ -141,7 +161,7 @@ config.vm.define :ambari5 do |node|
 config.vm.define :ambari6 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari6.ambari.keedio.org"
+    node.vm.hostname = "ambari6.cediant.keedio.org"
     node.vm.network :private_network, ip: "192.168.65.107"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
@@ -156,7 +176,7 @@ config.vm.define :ambari6 do |node|
 config.vm.define :ambari7 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari7.ambari.keedio.org"
+    node.vm.hostname = "ambari7.cediant.keedio.org"
     node.vm.network :private_network, ip: "192.168.65.108"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
@@ -171,7 +191,7 @@ config.vm.define :ambari7 do |node|
 config.vm.define :ambari8 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari8.ambari.keedio.org"
+    node.vm.hostname = "ambari8.cediant.keedio.org"
     node.vm.network :private_network, ip: "192.168.65.109"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
@@ -186,7 +206,7 @@ config.vm.define :ambari8 do |node|
 config.vm.define :ambari9 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari9.ambari.keedio.org"
+    node.vm.hostname = "ambari9.cediant.keedio.org"
     node.vm.network :private_network, ip: "192.168.65.110"
     node.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", 2048]
