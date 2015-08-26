@@ -4,6 +4,7 @@
 
   node default {
   include local-repo
+  include host-manager
   package { "ambari-agent":
     ensure => "installed",
     require => Yumrepo[ "ambari-1.x" ]
@@ -27,6 +28,7 @@
 
   node 'master' {
   include local-repo
+  include host-manager
   include keedio
   package { "ambari-server":
     ensure => "installed",
@@ -76,7 +78,16 @@
   require => [Package["ambari-server"],Exec["ambari-setup"]],
   subscribe => File["/etc/ambari-server/conf/ambari.properties"]
   }
-
+  file{'/etc/ambari-agent/conf/ambari-agent.ini':
+  ensure => file,
+  source => 'puppet:///files/ambari-agent.ini',
+  require => Package["ambari-agent"]
+  }
+  service { "ambari-agent":
+  ensure => "running",
+  require => Package["ambari-agent"],
+  subscribe => File["/etc/ambari-agent/conf/ambari-agent.ini"]
+  }
   }
  
   node buildoop {
