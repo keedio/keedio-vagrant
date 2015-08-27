@@ -74,5 +74,13 @@ And restart with
 vagrant resume
 ``` 
 
+# keedio-vagrant on the Cediant openstack cloud 
+
+It's possible to start keedio-vagrant on the Cediant cloud using the openstack-provider plugin. 
+At the moment you need to clone the relative branch.  
+
+
+
+
 
 
