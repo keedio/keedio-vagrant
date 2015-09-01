@@ -76,7 +76,10 @@ vagrant resume
 
 # keedio-vagrant on the Cediant openstack cloud 
 
-It's possible to start keedio-vagrant on the Cediant cloud using the openstack-provider plugin. 
+It's possible to start keedio-vagrant on the Cediant cloud using the openstack-provider plugin. You have to install the plugin first.
+```
+vagrant plugin install vagrant-openstack-provider
+```
 At the moment you need to clone the relative branch, enter the ambari1 folder and edit the Vagrant file to specify your credentials 
 
 ```
