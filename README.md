@@ -80,13 +80,15 @@ It's possible to start keedio-vagrant on the Cediant cloud using the openstack-p
 ```
 vagrant plugin install vagrant-openstack-provider
 ```
-At the moment you need to clone the relative branch, enter the ambari1 folder and edit the Vagrant file to specify your credentials 
+At the moment you need to clone the openstack branch from the keedio-vagrant github repo.
 
+In order to access the cloud you have to download the "Openstack RC file" in the "Access and Security" section.The filename is $USER_openrc.sh.
+Before starting any vagrant-openstack session you have to source us 
 ```
-os.username           = 'Your username'
-os.password           = 'Your password'
-os.tenant_name        = 'Your tenant'
+source $USER_openrc.sh
 ```
+You will be prompted for you openstack passowrd. Input it.  
+
 After that you can start you VMs with vagrant up adding a flag to specify the openstack provider. Buildoop is not required, as the Cediant cloud local repo will be used.
 
 ```
