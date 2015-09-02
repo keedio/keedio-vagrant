@@ -82,12 +82,12 @@ vagrant plugin install vagrant-openstack-provider
 ```
 At the moment you need to clone the openstack branch from the keedio-vagrant github repo.
 
-In order to access the cloud you have to download the "Openstack RC file" in the "Access and Security" section.The filename is $USER_openrc.sh.
-Before starting any vagrant-openstack session you have to source us 
+In order to access the cloud you have to download the "Openstack RC file" in the "Access and Security" section of Horizon interface. The filename is $USER_openrc.sh.
+Before starting any vagrant-openstack session you have to source it
 ```
 source $USER_openrc.sh
 ```
-You will be prompted for you openstack passowrd. Input it.  
+You will be prompted for you openstack password. Input it.  
 
 After that you can start you VMs with vagrant up adding a flag to specify the openstack provider. Buildoop is not required, as the Cediant cloud local repo will be used.
 
