@@ -1,0 +1,12 @@
+---
+---# Set here which repository you want to use for the deployments
+---# public: repo.keedio.org 
+---# office: Keedio´s ofice 
+---# local: Local VM Buildoop 
+repo_address: 'local'
+my_message: 'Hello, World!'
+---# Enable here free IPA installation
+---# which includes LDAP and Kerberos
+---# Important if you wnat your cluster to be securized 
+ipa: 'true'
+
