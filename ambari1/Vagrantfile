@@ -19,6 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # doesn't already exist on the user's system.
 
   # CentOS 6.6 x86_64
+=======
   config.vm.box_url = "https://atlas.hashicorp.com/keedio/boxes/keedio-base"
 
 
@@ -261,6 +262,7 @@ config.vm.define :ambari9 do |node|
      puppet.manifests_path = "manifests"
      puppet.module_path = "manifests/modules"
      puppet.manifest_file  = "init.pp"
+     puppet.hiera_config_path = "hiera.yaml"
    end
 
   # Enable provisioning with chef solo, specifying a cookbooks path, roles

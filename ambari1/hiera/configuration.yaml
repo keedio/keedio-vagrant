@@ -1,0 +1,27 @@
+---
+# Set here which repository you want to use for the deployments
+# public: repo.keedio.org 
+# office: Keedio´s ofice 
+# local: Local VM Buildoop 
+repo_address: 'public'
+#
+# set the development variable to true if you are a Keedio developer 
+development: false  
+#
+# includes 32 bits development support (only for fw1-loggrabber)
+development_32bits: false 
+#
+# Enable here free IPA installation
+# which includes LDAP and Kerberos
+# Important if you want your cluster securized 
+ipa: true 
+#  
+# Specify the name resolution method
+# static: A precompiled file is copied in /etc/hosts (Default for Vairtualbox)
+# script: The post-installation script set-hosts-openstack.py needs to be manually executed (Default for Openstack)  
+nameresolution: 'static'
+#
+# Specify the ambary backend database
+# default: the default db shipped with ambari (postgres) 
+# mysql: mysql running on the master,  requires manual configuration
+ambaridb: 'default' 

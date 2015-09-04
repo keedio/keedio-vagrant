@@ -22,9 +22,20 @@ group { 'apache':
 File { owner => 0, group => 0, mode => 0644 }
 
  file { '/etc/motd':
-   content => "Welcome to your Vagrant-built virtual machine!
+   content => "Welcome to your Keedio-vagrant virtual machine!
                Managed by Puppet.\n"
  }
+
+
+ if hiera(nameresolution) =='static' {
+    file{'/etc/hosts':
+         ensure => file,
+         source => 'puppet:///files/hosts',
+         owner  => 'root',
+         mode   =>  0644
+    }
+  
+ } 
  yumrepo { "epel":
       baseurl => "http://mirror.de.leaseweb.net/epel/6/x86_64",
       descr => "epel",
@@ -51,19 +62,21 @@ File { owner => 0, group => 0, mode => 0644 }
       gpgcheck => 0,
   }
 
-  yumrepo { "epel-apache-maven":
-      baseurl => "http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-6Server/x86_64/",
-      descr => "maven from apache",
-      enabled => 1,
-      gpgcheck => 0,
+  if hiera(development)  {
+      yumrepo { "epel-apache-maven":
+         baseurl => "http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-6Server/x86_64/",
+         descr => "maven from apache",
+         enabled => 1,
+         gpgcheck => 0,
   }
-
+  }
 
 
 
 
   package { "yum": ensure => "installed" }
   package { "wget": ensure => "installed" }
+  package { "git": ensure => "installed" }
   package { "vim-enhanced": ensure => "installed" }
   package { "yum-plugin-priorities": ensure => "installed" }
 
