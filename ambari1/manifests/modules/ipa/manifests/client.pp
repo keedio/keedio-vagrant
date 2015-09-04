@@ -1,4 +1,5 @@
 class   ipa::client {
+ if hiera(ipa) {
  package { "ipa-client": ensure => "installed"}
  package { "ipa-admintools": ensure => "installed"}
  exec { 'ipa':
@@ -7,6 +8,6 @@ class   ipa::client {
   require => Package['ipa-client','ipa-admintools'],
   timeout     => 1200
  } 
-
+ }
 }
 

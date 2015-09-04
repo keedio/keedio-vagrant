@@ -68,15 +68,22 @@
   require => Package["ambari-server","ambari-agent","ambari-log4j"]
   }
   exec { "ambari-setup":
-  command => "ambari-server setup -s --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar",
+  command => "ambari-server setup -s",
   cwd     => "/var/tmp",
   creates => "/var/lib/pgsql/data/postgresql.conf",
   path    => ["/usr/bin", "/usr/sbin","/sbin","/bin"],
   require => Package["ambari-server","ambari-agent","ambari-log4j"]
   }
+  exec { "ambari-setup-jdbc":
+  command => "ambari-server setup -s --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar",
+  cwd     => "/var/tmp",
+  creates => "/var/lib/ambari-server/resources/mysql-jdbc-driver.jar",
+  path    => ["/usr/bin", "/usr/sbin","/sbin","/bin"],
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Exec["ambari-setup"]]
+  }
   service { "ambari-server":
   ensure => "running",
-  require => [Package["ambari-server"],Exec["ambari-setup"]],
+  require => [Package["ambari-server"],Exec["ambari-setup","ambari-setup-jdbc"]],
   subscribe => File["/etc/ambari-server/conf/ambari.properties"]
   }
 
@@ -84,8 +91,10 @@
  
   node buildoop {
   include keedio
-  class { 'groovy': 
-    }
+  if hiera(development) {
+     class { 'groovy': 
+     }
+  }
   package { "fuse-devel": ensure => "installed"}
   package { "fuse-libs": ensure => "installed"}
   package { "fuse": ensure => "installed"}
@@ -95,29 +104,21 @@
   package { "createrepo": ensure => "installed"}
   package { "yum-utils": ensure => "installed"}
   package { "httpd": ensure => "installed"}
-  package { "git": ensure => "installed"}
   package { "redhat-rpm-config": ensure => "installed"}
   package { "rpm-build": ensure => "installed"}
-  package { "glibc-devel.i686": ensure => "installed"}
-  package { "elfutils-libelf.i686": ensure => "installed"}
-  package { "compat-libstdc++-33.i686": ensure => "installed"}
   package { "gcc-c++": ensure => "installed"}
   package { "jdk": 
              ensure => "installed",
              require => Yumrepo["keedio-1.2"]
           }
+  if hiera(development_32bits)    {
+     package { "glibc-devel.i686": ensure => "installed"}
+     package { "elfutils-libelf.i686": ensure => "installed"}
+     package { "compat-libstdc++-33.i686": ensure => "installed"}
+  }
   file {"/etc/profile.d/buildoop.sh":
          ensure  => "present",
-         content => "export JAVA_HOME=/usr/java/jdk1.7.0_51\nexport PATH=/usr/java/jdk1.7.0_51/bin:\$PATH\nexport MAVEN_OPTS='-Xms512m -Xmx1024m'"
-       }
-  cron { "createrepo":
-         ensure  => present,
-         command => "createrepo --simple-md-filenames /vagrant/repo/keedio-1.2/",
-         user    => 'root',
-         hour    => 14,
-         minute  => 0,
-         require => Package["createrepo"]
-       }
+         content => "export JAVA_HOME=/usr/java/jdk1.7.0_51\nexport PATH=/usr/java/jdk1.7.0_51/bin:\$PATH\nexport MAVEN_OPTS='-Xms512m -Xmx1024m'"}
   file_line{'repo_root':
             path =>'/etc/httpd/conf/httpd.conf',
             line =>'DocumentRoot "/var/www/html/repo"',

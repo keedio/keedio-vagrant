@@ -1,5 +1,5 @@
 class ipa::server {
-
+  if hiera(ipa) {
   package { "ipa-server": ensure => "present"}
 
   exec { 'ipa':
@@ -7,5 +7,6 @@ class ipa::server {
   creates => "/var/lib/ipa/sysrestore/sysrestore.state",
   require => Package['ipa-server'], 
   timeout     => 1200 
- }   
+  }
+  }   
 }
