@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # doesn't already exist on the user's system.
 
   # CentOS 6.6 x86_64
-=======
+#=======
   config.vm.box_url = "https://atlas.hashicorp.com/keedio/boxes/keedio-base"
 
 
