@@ -1,2 +1,5 @@
 .vagrant/*
 disks/*
+Vagrantfile
+hiera/configuration.yaml
+manifests/modules/host-manager/manifests/init.pp
