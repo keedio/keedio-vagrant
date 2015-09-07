@@ -87,6 +87,16 @@
   subscribe => File["/etc/ambari-server/conf/ambari.properties"]
   }
 
+   file{'/etc/ambari-agent/conf/ambari-agent.ini':
+  ensure => file,
+  source => 'puppet:///files/ambari-agent.ini',
+  require => Package["ambari-agent"]
+  }
+  service { "ambari-agent":
+  ensure => "running",
+  require => Package["ambari-agent"],
+  subscribe => File["/etc/ambari-agent/conf/ambari-agent.ini"]
+  }
   }
  
   node buildoop {

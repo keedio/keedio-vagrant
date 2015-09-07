@@ -9,7 +9,7 @@ import sys
 cluster_name="ambari"
 domain_name="keedio.org"
 number_of_slaves=9
-DEBUG=False
+DEBUG=True
 
 #Process 
 print "########################################################"

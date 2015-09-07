@@ -4,7 +4,7 @@
 # office: Keedio´s ffice 
 # local: Local VM Buildoop 
 # cediant: Cediant´s cloud
-repo_address: 'office'
+repo_address: 'cediant'
 #
 # set the development variable to true if you are a Keedio developer 
 development: false  
@@ -15,12 +15,12 @@ development_32bits: false
 # Enable here free IPA installation
 # which includes LDAP and Kerberos
 # Important if you want your cluster securized 
-ipa: true 
+ipa:  true 
 #  
 # Specify the name resolution method
 # static: A precompiled file is copied in /etc/hosts (Default for Vairtualbox)
 # script: The post-installation script set-hosts-openstack.py needs to be manually executed (Default for Openstack)  
-nameresolution: 'static'
+nameresolution: 'script'
 #
 # Specify the ambary backend database
 # default: the default db shipped with ambari (postgres) 
