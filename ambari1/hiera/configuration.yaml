@@ -1,9 +1,10 @@
 ---
 # Set here which repository you want to use for the deployments
 # public: repo.keedio.org 
-# office: Keedio´s ofice 
+# office: Keedio´s ffice 
 # local: Local VM Buildoop 
-repo_address: 'public'
+# cediant: Cediant´s cloud
+repo_address: 'office'
 #
 # set the development variable to true if you are a Keedio developer 
 development: false  

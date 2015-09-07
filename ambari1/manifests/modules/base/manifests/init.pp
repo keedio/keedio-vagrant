@@ -33,9 +33,10 @@ File { owner => 0, group => 0, mode => 0644 }
          source => 'puppet:///files/hosts',
          owner  => 'root',
          mode   =>  0644
-    }
-  
- } 
+    } }
+ elseif hiera(nameresolution) =='script' {
+     include host-manager
+ }  
  yumrepo { "epel":
       baseurl => "http://mirror.de.leaseweb.net/epel/6/x86_64",
       descr => "epel",
