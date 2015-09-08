@@ -2,6 +2,8 @@
 
 #cp /vagrant/hosts /etc/hosts
 cp /vagrant/resolv.conf /etc/resolv.conf
+cp /vagrant/RPM-GPG-KEY-puppetlabs /etc/pki/rpm-gpg
+
 yum install ntp -y
 yum install puppet -y
 yum install puppet-server -y
