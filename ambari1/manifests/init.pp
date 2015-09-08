@@ -5,6 +5,7 @@
   node default {
   include local-repo
   include ipa::client 
+  if hiera(deployment) == 'ambari' {
   package { "ambari-agent":
     ensure => "installed",
     require => Yumrepo[ "ambari-1.x" ]
@@ -22,6 +23,10 @@
   ensure => "running",
   require => Package["ambari-agent"],
   subscribe => File["/etc/ambari-agent/conf/ambari-agent.ini"]
+  }
+  }
+  if hiera(deployment) == 'standalone' {
+  include keedio
   }
   }
 
