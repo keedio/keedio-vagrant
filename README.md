@@ -179,6 +179,10 @@ You should be able to point your browser to master.ambari.keedio.org:8080 and in
 
 Notice: everytime you install a new host in the cluster, you have to repeat the execution of the  script and the vagrant provision steps. The script is cusomizable, and you can select different cluster and domain names for your cluster.  
 
+## Know problems
+
+If you delete VMs in horizon, vagrant will enter an invalid state and you will be forced to start from scratch. 
+
 # Optional:  Enabling Free IPA
 
 Free IPA is a RedHat service that provides LDAP and Kerberos authentication, you need to enable it only if you want to test the securization of your cluster. We reccomend enabling it after the VMs have been started. In order to do that you have to change the hiera/configuration.yaml file.
