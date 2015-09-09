@@ -3,6 +3,7 @@
   - yaml
 
 :hierarchy:
+  - "%{::clientcert}"
   - "configuration"
 
 :yaml:

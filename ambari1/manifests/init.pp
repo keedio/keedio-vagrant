@@ -1,5 +1,4 @@
  include base
- # redirect repo request to buildoop VM
  
 
   node default {
@@ -27,6 +26,10 @@
   }
   if hiera(deployment) == 'standalone' {
   include keedio
+  package { "jdk":
+             ensure => "installed",
+             require => Yumrepo["keedio-1.2"]
+          }
   }
   }
 
