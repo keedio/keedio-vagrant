@@ -1,5 +1,6 @@
 class  base  {
 
+
 class { 'timezone':
     timezone => 'Europe/Madrid',
 }
@@ -11,6 +12,8 @@ user { "apache":
  require => Group['apache']
 }
 
+
+
 group { 'puppet':
   ensure => "present",
  }
@@ -18,6 +21,16 @@ group { 'apache':
   ensure => "present",
   gid => 48
  }
+
+exec { 'alternativesjava':
+       command => 'alternatives --install /usr/bin/java java /usr/java/default/bin/java 200000',
+       require => Package['chkconfig'],
+       timeout => 1200,
+       provider => shell, 
+       unless => 'if [ "$(readlink /etc/alternatives/java)" = "/usr/java/default/bin/java" ]'
+      }
+
+
 
 File { owner => 0, group => 0, mode => 0644 }
 
@@ -79,10 +92,12 @@ if hiera(nameresolution) == 'script' {
 
 
   package { "yum": ensure => "installed" }
+  package { "chkconfig": ensure => "installed" }
   package { "wget": ensure => "installed" }
   package { "git": ensure => "installed" }
   package { "vim-enhanced": ensure => "installed" }
   package { "yum-plugin-priorities": ensure => "installed" }
+  package { "python-requests": ensure => "installed" }
 
   file{'/root/.ssh/authorized_keys':
   ensure => file,
