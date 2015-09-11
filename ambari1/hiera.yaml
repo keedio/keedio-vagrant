@@ -1,5 +1,6 @@
 ---
 :backends:
+  - eyaml
   - yaml
 
 :hierarchy:
@@ -7,4 +8,6 @@
   - "configuration"
 
 :yaml:
+  :datadir: '/vagrant/hiera'
+:eyaml:
   :datadir: '/vagrant/hiera'

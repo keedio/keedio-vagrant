@@ -11,6 +11,8 @@ service ntpd start
 service iptables stop
 mkdir -p /root/.ssh; chmod 600 /root/.ssh; cp /home/vagrant/.ssh/authorized_keys /root/.ssh/
 
+# Adding eyaml support for encryption 
+gem install hiera-eyaml --no-rdoc --no-ri
 #Again, stopping iptables
 /etc/init.d/iptables stop
 
