@@ -1,5 +1,6 @@
  include base
  
+  
 
   node default {
   include local-repo
@@ -37,7 +38,7 @@
   node 'master' {
   include local-repo
   include keedio
-
+  include mysql-ambari
   include ipa::server
   package { "ambari-server":
     ensure => "installed",
