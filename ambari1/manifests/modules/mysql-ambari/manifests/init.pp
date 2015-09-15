@@ -1,6 +1,6 @@
 class   mysql-ambari {
 class { '::mysql::server':
-  root_password           => 'adminadmin',
+  root_password           => hiera(db_password),
   remove_default_accounts => true,
   override_options      => {
         mysqld => { bind-address => '0.0.0.0'} 
@@ -16,7 +16,7 @@ mysql::db { 'ambari':
 
 mysql::db { 'oozie':
   user     => 'oozie',
-  password => 'oozie',
+  password => hiera(oozie_db_password),
   host     => '%',
   grant    => ['ALL']
 }
@@ -33,7 +33,7 @@ mysql::db { 'oozie':
 
 mysql::db { 'hue':
   user     => 'hue',
-  password => 'hue',
+  password => hiera(hue_db_password),
   host     => '%',
   grant    => ['ALL']
 }
@@ -48,7 +48,7 @@ mysql::db { 'hue':
 
 mysql::db { 'hive':
   user     => 'hive',
-  password => 'hive',
+  password => hiera(hive_db_password),
   host     => '%',
   grant    => ['ALL']
 }
