@@ -9,7 +9,7 @@ import sys
 cluster_name="ambari"
 domain_name="keedio.org"
 number_of_slaves=9
-DEBUG=True
+DEBUG=False
 
 #Process 
 print "########################################################"
@@ -55,8 +55,8 @@ for node in available_nodes:
     if DEBUG:
         print command
     cmd= subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    out, err = cmd.communicate()
     if DEBUG:
-        out, err = cmd.communicate()
         print "Setting in memory hostname for", node 
         print out 
         print err 
@@ -66,8 +66,8 @@ for node in available_nodes:
     if DEBUG:
         print command 
     cmd= subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    out, err = cmd.communicate()
     if DEBUG:
-        out, err = cmd.communicate()
         print "Setting permanent hostname for", node
         print out
         print err   
