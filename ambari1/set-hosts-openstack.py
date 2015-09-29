@@ -9,7 +9,7 @@ import sys
 cluster_name="ambari"
 domain_name="keedio.org"
 number_of_slaves=9
-DEBUG=False
+DEBUG=True
 
 #Process 
 print "########################################################"
@@ -51,7 +51,7 @@ dict_values={}
 print "\n","setting hostnames on the VMs\n" 
 
 for node in available_nodes:
-    command="vagrant ssh -c 'hostname "+FQDN[node]+"' "+str(node)
+    command="vagrant ssh -c 'sudo hostname "+FQDN[node]+"' "+str(node)
     if DEBUG:
         print command
     cmd= subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
@@ -61,7 +61,7 @@ for node in available_nodes:
         print out 
         print err 
 
-    command= 'printf \'HOSTNAME='+str(FQDN[node])+'\\nNETWORKING=yes\\nNISDOMAIN='+cluster_name+'.'+domain_name+"\\n\' >/etc/sysconfig/network"
+    command= 'printf \'HOSTNAME='+str(FQDN[node])+'\\nNETWORKING=yes\\nNISDOMAIN='+cluster_name+'.'+domain_name+"\\n\' | sudo tee /etc/sysconfig/network"
     command='vagrant ssh -c "'+command+'" '+str(node)
     if DEBUG:
         print command 
