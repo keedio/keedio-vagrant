@@ -50,26 +50,26 @@ File { owner => 0, group => 0, mode => 0644 }
  }
  
 if hiera(nameresolution) == 'script' {
-     include host-manager
+     contain host-manager
  }  
 
  yumrepo { "epel":
       baseurl => "http://mirror.de.leaseweb.net/epel/6/x86_64",
       descr => "epel",
-      enabled => 1,
+      enabled => 0,
       gpgcheck => 0
   }
 
   yumrepo { "ambari-1.x":
       baseurl => "http://public-repo-1.hortonworks.com/ambari/centos6/1.x/GA",
       descr => "Ambari",
-      enabled => 1,
+      enabled => 0,
       gpgcheck => 0,
   }
   yumrepo { "Updates-ambari-1.x":
       baseurl => "http://public-repo-1.hortonworks.com/ambari/centos6/1.x/updates/1.7.0",
       descr => "Ambari",
-      enabled => 1,
+      enabled => 0,
       gpgcheck => 0,
   }
   yumrepo { "ambari-2.0.0Updates":
@@ -83,7 +83,7 @@ if hiera(nameresolution) == 'script' {
       yumrepo { "epel-apache-maven":
          baseurl => "http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-6Server/x86_64/",
          descr => "maven from apache",
-         enabled => 1,
+         enabled => 0,
          gpgcheck => 0,
   }
   }
