@@ -21,7 +21,7 @@
   }
   service { "ambari-agent":
   ensure => "running",
-  require => Package["ambari-agent"],
+  require => [Package["ambari-agent"],Class["base"]],
   subscribe => File["/etc/ambari-agent/conf/ambari-agent.ini"]
   }
   }
@@ -81,7 +81,7 @@
   cwd     => "/var/tmp",
   creates => "/var/lib/pgsql/data/postgresql.conf",
   path    => ["/usr/bin", "/usr/sbin","/sbin","/bin"],
-  require => Package["ambari-server","ambari-agent","ambari-log4j"]
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Class["base"]]
   }
   exec { "ambari-setup-jdbc":
   command => "ambari-server setup -s --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar",
