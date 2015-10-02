@@ -6,10 +6,41 @@ import sys
 
 #Configuration 
 
-cluster_name="ambari"
-domain_name="keedio.org"
 number_of_slaves=9
 DEBUG=True
+
+#Extracting domain information from hiera confs
+
+cmd= subprocess.Popen("grep  'set_subdomain' hiera/configuration.yaml| awk '{ print $2}'",shell=True,stdout=subprocess.PIPE)
+cluster_name, err=cmd.communicate()
+cluster_name=cluster_name.replace('\n','')
+cluster_name=cluster_name.replace('\'','')
+cluster_name=cluster_name.replace(' ','')
+cmd= subprocess.Popen("grep  'set_domain' hiera/configuration.yaml| awk '{ print $2}'",shell=True,stdout=subprocess.PIPE)
+domain_name, err=cmd.communicate()
+domain_name=domain_name.replace('\n','')
+domain_name=domain_name.replace('\'','')
+domain_name=domain_name.replace(' ','')
+
+print cluster_name,domain_name,'aa'
+if not cluster_name or not domain_name:
+     print "Domain information not found in configuration.yaml, reverting to default"
+     cmd= subprocess.Popen("grep  'set_subdomain' hiera/default.yaml| awk '{ print $2}'",shell=True,stdout=subprocess.PIPE)
+     cluster_name, err=cmd.communicate()
+     cluster_name=cluster_name.replace('\n','')
+     cluster_name=cluster_name.replace('\'','')
+     cluster_name=cluster_name.replace('\ ','')
+     cmd= subprocess.Popen("grep  'set_domain' hiera/default.yaml| awk '{ print $2}'",shell=True,stdout=subprocess.PIPE)
+     domain_name, err=cmd.communicate()
+     domain_name=domain_name.replace('\n','')
+     domain_name=domain_name.replace('\'','')
+     domain_name=domain_name.replace('\ ','')
+
+
+if not cluster_name or not domain_name:
+     print "No default configuration found for domain information, you have to run this program in the same dir of the Vagrantfile"
+     exit()
+   
 
 #Process 
 print "########################################################"

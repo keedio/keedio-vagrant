@@ -17,14 +17,14 @@
 
 # This script is based onthe `para-vagrant.sh` script by Joe Miller, available at https://github.com/joemiller/sensu-tests/blob/master/para-vagrant.sh.
 
-MAX_PROCS="-j 16"
+MAX_PROCS="-j 8"
 
 #A 5 seconds delay between tasks has been introduced to avoid race conditions in getting floating IPs.
 
 parallel_up() {
     while read box; do
         echo $box
-     done | parallel $MAX_PROCS --delay 5 -I"NODE" -q \
+     done | parallel $MAX_PROCS --delay 8 -I"NODE" -q \
         sh -c 'LOGFILE="logs/NODE.start.out.txt" ;                                 \
                 printf  "[NODE] Provisioning. Log: $LOGFILE, Result: " ;     \
                 vagrant up --no-provision NODE > $LOGFILE 2>&1 ;                      \
