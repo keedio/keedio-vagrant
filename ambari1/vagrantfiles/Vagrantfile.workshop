@@ -97,42 +97,36 @@ config.vm.define :ambari4 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.hostname = "ambari4.cediant.keedio.org"
-  end
 end
 
 config.vm.define :ambari5 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.hostname = "ambari5.cediant.keedio.org"
-  end
 end
 
 config.vm.define :ambari6 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.hostname = "ambari6.cediant.keedio.org"
-  end
 end
 
 config.vm.define :ambari7 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.hostname = "ambari7.cediant.keedio.org"
-  end
 end
 
 config.vm.define :ambari8 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.hostname = "ambari8.cediant.keedio.org"
-  end
 end
 
 config.vm.define :ambari9 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.hostname = "ambari9.cediant.keedio.org"
-  end
 end
 
   # Create a forwarded port mapping which allows access to a specific port
