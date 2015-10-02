@@ -53,7 +53,7 @@ if hiera(nameresolution) == 'script' {
      contain host-manager
  }  
 
- if hiera(disable_repos) {
+ if hiera(disable_repos) == true {
  $isenabled = 0
  }
  else {
