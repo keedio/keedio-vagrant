@@ -40,4 +40,4 @@ set_domain: 'keedio.org'
 # Set here the subdomain name
 set_subdomain: 'ambari'
 #set here the relam
-realm: 'KEEDIO.ORG' 
+set_realm: 'KEEDIO.ORG' 

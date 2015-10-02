@@ -1,6 +1,6 @@
 class  keedio  {
 
- if hiera(disable_repos) {
+ if hiera(disable_repos) == true {
  $isenabled = 0
  }
  else {
