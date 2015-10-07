@@ -92,25 +92,25 @@
   file{'/var/lib/ambari-server/resources/views/work/ADMIN_VIEW{1.0.0}/styles/main.css':
   ensure => file,
   source => 'puppet:///files/main.css',
-  require => Package["ambari-server","ambari-agent","ambari-log4j"],
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Exec["ambari-setup"]],
   notify => Service["ambari-server"]
   }
   file{'/var/lib/ambari-server/resources/views/work/ADMIN_VIEW{1.0.0}/index.html':
   ensure => file,
   source => 'puppet:///files/index.html',
-  require => Package["ambari-server","ambari-agent","ambari-log4j"],
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Exec["ambari-setup"]],
   notify => Service["ambari-server"]
   }
   file{'/var/lib/ambari-server/resources/views/work/ADMIN_VIEW{1.0.0}/views/main.html':
   ensure => file,
   source => 'puppet:///files/main.html',
-  require => Package["ambari-server","ambari-agent","ambari-log4j"],
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Exec["ambari-setup"]],
   notify => Service["ambari-server"]
   }
   file{'/var/lib/ambari-server/resources/views/work/ADMIN_VIEW{1.0.0}/views/modals/AboutModal.html':
   ensure => file,
   source => 'puppet:///files/AboutModal.html',
-  require => Package["ambari-server","ambari-agent","ambari-log4j"],
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Exec["ambari-setup"]],
   notify => Service["ambari-server"]
 
   }
