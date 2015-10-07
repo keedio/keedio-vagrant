@@ -105,4 +105,4 @@ fi
 
 rm -f logs/*.tmp
 
-export $( grep resolution hiera/configuration.yaml |sed -e 's/:[^:\/\/]/="/g;s/$/"/g;s/ *=/=/g')
+#export $( grep resolution hiera/configuration.yaml |sed -e 's/:[^:\/\/]/="/g;s/$/"/g;s/ *=/=/g')
