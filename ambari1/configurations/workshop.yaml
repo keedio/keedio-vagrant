@@ -27,6 +27,8 @@ ipa:     true
 # script: The post-installation script set-hosts-openstack.py needs to be manually executed (Default for Openstack)  
 nameresolution: 'script'
 #
+# Set it to true to disable repositories, this is useful when repos are already available on the system
+disable_repos: true
 # Specify the ambary backend database
 # default: the default db shipped with ambari (postgres) 
 # mysql: mysql running on the master,  requires manual configuration
@@ -37,4 +39,5 @@ set_domain: 'prbes.lab'
 set_subdomain: 'keedio'
 #set here the relam
 set_realm: 'PRBES.LAB'
-
+# set master here for multiclaustering
+# set_master: 'master2' 

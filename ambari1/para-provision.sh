@@ -23,7 +23,6 @@ MAX_PROCS="-j 16"
 
 # Read parameter from vagrantconfig.yaml file
 NUM_INSTANCE=10
-#SMOKE_TEST_COMPONENTS=$(grep smoke_test_components vagrantconfig.yaml | awk -F[ '/,/{gsub(/ /, "", $2); print $2}' | awk -F] '{print $1}')
 RUN_SMOKE_TESTS=false
 
 parallel_provision() {
@@ -67,7 +66,22 @@ parallel_provision() {
 mkdir logs >/dev/null 2>&1
 rm -f logs/*
 
-echo master2 | parallel_provision
+
+master_name=`grep -v "#" hiera/configuration.yaml|grep   'set_master' | awk '{ print $2}'`
+if [ -z "$master_name" ]
+then
+master_name=`grep  'set_master' hiera/default.yaml| awk '{print $2}'`
+fi
+
+echo "Starting master:",$master_name
+
+master_name="${master_name%\'}" 
+master_name="${master_name#\'}" 
+
+
+echo "$master_name" | parallel_provision
+
+
 # but run provision tasks in parallel
 echo " ==> Beginning parallel 'vagrant provision' processes ..."
 grep "config.vm.define"  Vagrantfile | grep -v buildoop |awk '{print $2}'| cut -c2-  | parallel_provision

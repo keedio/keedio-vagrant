@@ -57,7 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.provider "openstack" do |d|
     d.flavor='keedio.L'
-    d.floating_ip='180.133.240.134' 
+    d.floating_ip='180.133.240.146' 
     end
   end
 
@@ -156,7 +156,7 @@ config.vm.define :ambari20 do |node|
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.provider "openstack" do |d|
     d.flavor='keedio.M'
-    d.floating_ip='180.133.240.146'
+    d.floating_ip='180.133.240.136'
     end
 end
 
@@ -218,7 +218,7 @@ end
   # # }
   #
    config.vm.provision :puppet, 
-     :options => ["--fileserverconfig=/vagrant/fileserver.conf","--pluginsync"],
+     :options => ["--fileserverconfig=/vagrant/fileserver.conf","--pluginsync","--templatedir","/vagrant/templates"],
      :facter => { "fqdn" => "vagrant.vagrantup.com" } do |puppet| 
      puppet.manifests_path = "manifests"
      puppet.module_path = "manifests/modules"

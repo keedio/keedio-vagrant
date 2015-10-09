@@ -37,7 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     os.username           = "#{ENV['OS_USERNAME']}" 
     os.password           = "#{ENV['OS_PASSWORD']}"
     os.tenant_name        = "#{ENV['OS_TENANT_NAME']}"
-    os.flavor             = 'keedio.mem.M'
+    os.flavor             = 'keedio.M'
     os.image              = 'centos-6.7-x86_64-vagrant'
     os.floating_ip_pool   = 'nova'
     os.public_key_path   = './files/.ssh/id_rsa.pub'
@@ -56,7 +56,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.provider "openstack" do |d|
-    d.flavor='keedio.mem.L' 
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.107' 
     end
   end
 
@@ -64,7 +65,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.provider "openstack" do |d|
-    d.flavor='keedio.mem.L'
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.108'
     end
   end
 
@@ -72,7 +74,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.provider "openstack" do |d|
-    d.flavor='keedio.disk.XL'
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.109'
     end
   end
 
@@ -80,53 +83,81 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
     node.vm.provider "openstack" do |d|
-    d.flavor='keedio.disk.XL'
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.111'
     end
   end
 
  config.vm.define :ambari3 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari3.cediant.keedio.org"
     node.vm.provider "openstack" do |d|
-    d.flavor='keedio.disk.XL'
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.112'
     end
   end
 
 config.vm.define :ambari4 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari4.cediant.keedio.org"
+    node.vm.provider "openstack" do |d|
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.123'
+    end
 end
 
 config.vm.define :ambari5 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari5.cediant.keedio.org"
+    node.vm.provider "openstack" do |d|
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.124'
+    end
 end
 
 config.vm.define :ambari6 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari6.cediant.keedio.org"
+    node.vm.provider "openstack" do |d|
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.125'
+    end
 end
 
 config.vm.define :ambari7 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari7.cediant.keedio.org"
+    node.vm.provider "openstack" do |d|
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.126'
+    end
 end
 
 config.vm.define :ambari8 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari8.cediant.keedio.org"
+    node.vm.provider "openstack" do |d|
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.127'
+    end
 end
 
 config.vm.define :ambari9 do |node|
     # uncomment the line below to set up the ambari dev environment
     # node.vm.provision :shell, :path => "dev-bootstrap.sh"
-    node.vm.hostname = "ambari9.cediant.keedio.org"
+    node.vm.provider "openstack" do |d|
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.128'
+    end
+end
+
+config.vm.define :ambari10 do |node|
+    # uncomment the line below to set up the ambari dev environment
+    # node.vm.provision :shell, :path => "dev-bootstrap.sh"
+    node.vm.provider "openstack" do |d|
+    d.flavor='keedio.M'
+    d.floating_ip='180.133.240.134'
+    end
 end
 
   # Create a forwarded port mapping which allows access to a specific port
@@ -187,7 +218,7 @@ end
   # # }
   #
    config.vm.provision :puppet, 
-     :options => ["--fileserverconfig=/vagrant/fileserver.conf","--pluginsync"],
+     :options => ["--fileserverconfig=/vagrant/fileserver.conf","--pluginsync","--templatedir","/vagrant/templates"],
      :facter => { "fqdn" => "vagrant.vagrantup.com" } do |puppet| 
      puppet.manifests_path = "manifests"
      puppet.module_path = "manifests/modules"
