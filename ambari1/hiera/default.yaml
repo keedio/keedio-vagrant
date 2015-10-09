@@ -33,7 +33,7 @@ nameresolution: 'script'
 ambaridb: 'default'
 #
 # Set it to true to disable repositories, this is useful when repos are already available on the system 
-disable_repos: 'false'
+disable_repos: false
 #
 # Set here the main domain name 
 set_domain: 'keedio.org' 
