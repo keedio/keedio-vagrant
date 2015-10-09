@@ -1,0 +1,42 @@
+ambari1.keedio.prbes.lab,Ambari Smoke Test User,ambari-qa@PRBES.LAB,smokeuser.headless.keytab,/etc/security/keytabs,ambari-qa,hadoop,440
+ambari1.keedio.prbes.lab,HDFS User,hdfs@PRBES.LAB,hdfs.headless.keytab,/etc/security/keytabs,hdfs,hadoop,440
+ambari1.keedio.prbes.lab,HDFS SPNEGO User,HTTP/ambari1.keedio.prbes.lab@PRBES.LAB,spnego.service.keytab,/etc/security/keytabs,root,hadoop,440
+ambari1.keedio.prbes.lab,NameNode,nn/ambari1.keedio.prbes.lab@PRBES.LAB,nn.service.keytab,/etc/security/keytabs,hdfs,hadoop,400
+ambari2.keedio.prbes.lab,Ambari Smoke Test User,ambari-qa@PRBES.LAB,smokeuser.headless.keytab,/etc/security/keytabs,ambari-qa,hadoop,440
+ambari2.keedio.prbes.lab,HDFS User,hdfs@PRBES.LAB,hdfs.headless.keytab,/etc/security/keytabs,hdfs,hadoop,440
+ambari2.keedio.prbes.lab,HDFS SPNEGO User,HTTP/ambari2.keedio.prbes.lab@PRBES.LAB,spnego.service.keytab,/etc/security/keytabs,root,hadoop,440
+ambari2.keedio.prbes.lab,SNameNode,nn/ambari2.keedio.prbes.lab@PRBES.LAB,nn.service.keytab,/etc/security/keytabs,hdfs,hadoop,400
+ambari3.keedio.prbes.lab,Ambari Smoke Test User,ambari-qa@PRBES.LAB,smokeuser.headless.keytab,/etc/security/keytabs,ambari-qa,hadoop,440
+ambari3.keedio.prbes.lab,HDFS User,hdfs@PRBES.LAB,hdfs.headless.keytab,/etc/security/keytabs,hdfs,hadoop,440
+ambari3.keedio.prbes.lab,History server SPNEGO User,HTTP/ambari3.keedio.prbes.lab@PRBES.LAB,spnego.service.keytab,/etc/security/keytabs,root,hadoop,440
+ambari3.keedio.prbes.lab,History Server,jhs/ambari3.keedio.prbes.lab@PRBES.LAB,jhs.service.keytab,/etc/security/keytabs,mapred,hadoop,400
+ambari4.keedio.prbes.lab,Ambari Smoke Test User,ambari-qa@PRBES.LAB,smokeuser.headless.keytab,/etc/security/keytabs,ambari-qa,hadoop,440
+ambari4.keedio.prbes.lab,HDFS User,hdfs@PRBES.LAB,hdfs.headless.keytab,/etc/security/keytabs,hdfs,hadoop,440
+ambari4.keedio.prbes.lab,ResourceManager SPNEGO User,HTTP/ambari4.keedio.prbes.lab@PRBES.LAB,spnego.service.keytab,/etc/security/keytabs,root,hadoop,440
+ambari4.keedio.prbes.lab,ResourceManager,rm/ambari4.keedio.prbes.lab@PRBES.LAB,rm.service.keytab,/etc/security/keytabs,yarn,hadoop,400
+ambari5.keedio.prbes.lab,Ambari Smoke Test User,ambari-qa@PRBES.LAB,smokeuser.headless.keytab,/etc/security/keytabs,ambari-qa,hadoop,440
+ambari5.keedio.prbes.lab,HDFS User,hdfs@PRBES.LAB,hdfs.headless.keytab,/etc/security/keytabs,hdfs,hadoop,440
+ambari5.keedio.prbes.lab,NodeManager SPNEGO User,HTTP/ambari5.keedio.prbes.lab@PRBES.LAB,spnego.service.keytab,/etc/security/keytabs,root,hadoop,440
+ambari5.keedio.prbes.lab,DataNode,dn/ambari5.keedio.prbes.lab@PRBES.LAB,dn.service.keytab,/etc/security/keytabs,hdfs,hadoop,400
+ambari5.keedio.prbes.lab,NodeManager,nm/ambari5.keedio.prbes.lab@PRBES.LAB,nm.service.keytab,/etc/security/keytabs,yarn,hadoop,400
+ambari6.keedio.prbes.lab,Ambari Smoke Test User,ambari-qa@PRBES.LAB,smokeuser.headless.keytab,/etc/security/keytabs,ambari-qa,hadoop,440
+ambari6.keedio.prbes.lab,HDFS User,hdfs@PRBES.LAB,hdfs.headless.keytab,/etc/security/keytabs,hdfs,hadoop,440
+ambari6.keedio.prbes.lab,NodeManager SPNEGO User,HTTP/ambari6.keedio.prbes.lab@PRBES.LAB,spnego.service.keytab,/etc/security/keytabs,root,hadoop,440
+ambari6.keedio.prbes.lab,DataNode,dn/ambari6.keedio.prbes.lab@PRBES.LAB,dn.service.keytab,/etc/security/keytabs,hdfs,hadoop,400
+ambari6.keedio.prbes.lab,NodeManager,nm/ambari6.keedio.prbes.lab@PRBES.LAB,nm.service.keytab,/etc/security/keytabs,yarn,hadoop,400
+ambari6.keedio.prbes.lab,ZooKeeper Server,zookeeper/ambari6.keedio.prbes.lab@PRBES.LAB,zk.service.keytab,/etc/security/keytabs,zookeeper,hadoop,400
+ambari7.keedio.prbes.lab,Ambari Smoke Test User,ambari-qa@PRBES.LAB,smokeuser.headless.keytab,/etc/security/keytabs,ambari-qa,hadoop,440
+ambari7.keedio.prbes.lab,HDFS User,hdfs@PRBES.LAB,hdfs.headless.keytab,/etc/security/keytabs,hdfs,hadoop,440
+ambari7.keedio.prbes.lab,NodeManager SPNEGO User,HTTP/ambari7.keedio.prbes.lab@PRBES.LAB,spnego.service.keytab,/etc/security/keytabs,root,hadoop,440
+ambari7.keedio.prbes.lab,DataNode,dn/ambari7.keedio.prbes.lab@PRBES.LAB,dn.service.keytab,/etc/security/keytabs,hdfs,hadoop,400
+ambari7.keedio.prbes.lab,NodeManager,nm/ambari7.keedio.prbes.lab@PRBES.LAB,nm.service.keytab,/etc/security/keytabs,yarn,hadoop,400
+ambari8.keedio.prbes.lab,Ambari Smoke Test User,ambari-qa@PRBES.LAB,smokeuser.headless.keytab,/etc/security/keytabs,ambari-qa,hadoop,440
+ambari8.keedio.prbes.lab,HDFS User,hdfs@PRBES.LAB,hdfs.headless.keytab,/etc/security/keytabs,hdfs,hadoop,440
+ambari8.keedio.prbes.lab,NodeManager SPNEGO User,HTTP/ambari8.keedio.prbes.lab@PRBES.LAB,spnego.service.keytab,/etc/security/keytabs,root,hadoop,440
+ambari8.keedio.prbes.lab,DataNode,dn/ambari8.keedio.prbes.lab@PRBES.LAB,dn.service.keytab,/etc/security/keytabs,hdfs,hadoop,400
+ambari8.keedio.prbes.lab,NodeManager,nm/ambari8.keedio.prbes.lab@PRBES.LAB,nm.service.keytab,/etc/security/keytabs,yarn,hadoop,400
+ambari9.keedio.prbes.lab,Ambari Smoke Test User,ambari-qa@PRBES.LAB,smokeuser.headless.keytab,/etc/security/keytabs,ambari-qa,hadoop,440
+ambari9.keedio.prbes.lab,HDFS User,hdfs@PRBES.LAB,hdfs.headless.keytab,/etc/security/keytabs,hdfs,hadoop,440
+ambari9.keedio.prbes.lab,NodeManager SPNEGO User,HTTP/ambari9.keedio.prbes.lab@PRBES.LAB,spnego.service.keytab,/etc/security/keytabs,root,hadoop,440
+ambari9.keedio.prbes.lab,DataNode,dn/ambari9.keedio.prbes.lab@PRBES.LAB,dn.service.keytab,/etc/security/keytabs,hdfs,hadoop,400
+ambari9.keedio.prbes.lab,NodeManager,nm/ambari9.keedio.prbes.lab@PRBES.LAB,nm.service.keytab,/etc/security/keytabs,yarn,hadoop,400
