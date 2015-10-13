@@ -46,7 +46,7 @@ mysql::db { 'hue':
 #  user       => 'hue@%',
 #}
 
-mysql::db { 'hive':
+mysql::db { 'hive_meta':
   user     => 'hive',
   password => hiera(hive_db_password),
   host     => '%',
