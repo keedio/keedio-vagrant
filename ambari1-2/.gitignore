@@ -1,7 +1,0 @@
-.vagrant/*
-disks/*
-logs/*
-Vagrantfile
-hiera/configuration.yaml
-manifests/modules/host-manager/manifests/init.pp
-
