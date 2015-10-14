@@ -6,10 +6,53 @@ import sys
 
 #Configuration 
 
-cluster_name="ambari"
-domain_name="keedio.org"
 number_of_slaves=9
-DEBUG=True
+DEBUG=False
+
+#Extracting domain information from hiera confs
+
+cmd= subprocess.Popen("grep -v '#' hiera/configuration.yaml| grep 'set_subdomain'|head -1|  awk '{ print $2}'",shell=True,stdout=subprocess.PIPE)
+cluster_name, err=cmd.communicate()
+cluster_name=cluster_name.replace('\n','')
+cluster_name=cluster_name.replace('\'','')
+cluster_name=cluster_name.replace(' ','')
+cmd= subprocess.Popen("grep -v '#' hiera/configuration.yaml| grep 'set_domain'|head -1|  awk '{ print $2}'",shell=True,stdout=subprocess.PIPE)
+domain_name, err=cmd.communicate()
+domain_name=domain_name.replace('\n','')
+domain_name=domain_name.replace('\'','')
+domain_name=domain_name.replace(' ','')
+cmd= subprocess.Popen("grep -v '#' hiera/configuration.yaml| grep 'set_master'|head -1|  awk '{ print $2}'",shell=True,stdout=subprocess.PIPE)
+master_name, err=cmd.communicate()
+master_name=master_name.replace('\n','')
+master_name=master_name.replace('\'','')
+master_name=master_name.replace(' ','')
+
+
+if not cluster_name or not domain_name:
+     print "Domain information not found in configuration.yaml, reverting to default"
+     cmd= subprocess.Popen("grep  'set_subdomain' hiera/default.yaml| awk '{ print $2}'",shell=True,stdout=subprocess.PIPE)
+     cluster_name, err=cmd.communicate()
+     cluster_name=cluster_name.replace('\n','')
+     cluster_name=cluster_name.replace('\'','')
+     cluster_name=cluster_name.replace('\ ','')
+     cmd= subprocess.Popen("grep  'set_domain' hiera/default.yaml| awk '{ print $2}'",shell=True,stdout=subprocess.PIPE)
+     domain_name, err=cmd.communicate()
+     domain_name=domain_name.replace('\n','')
+     domain_name=domain_name.replace('\'','')
+     domain_name=domain_name.replace('\ ','')
+
+if not master_name: 
+     cmd= subprocess.Popen("grep -v '#' hiera/default.yaml| grep 'set_master'|head -1|  awk '{ print $2}'",shell=True,stdout=subprocess.PIPE)
+     master_name, err=cmd.communicate()
+     master_name=master_name.replace('\n','')
+     master_name=master_name.replace('\'','')
+     master_name=master_name.replace(' ','')
+
+
+if not cluster_name or not domain_name:
+     print "No default configuration found for domain information, you have to run this program in the same dir of the Vagrantfile"
+     exit()
+   
 
 #Process 
 print "########################################################"
@@ -28,12 +71,26 @@ except:
 print "Collecting information about available nodes\n"
 
 
-Nodes=['master','buildoop']
-FQDN={'master':'master.'+cluster_name+"."+domain_name,'buildoop':'buildoop.'+cluster_name+"."+domain_name};
+try:
+    vagrantfile=open("Vagrantfile","r")
+except: 
+     print"Error opening Vagrantfile, are you in the main directory?"
+     exit()
 
-for n in range(1,number_of_slaves+1):
-	Nodes.append("ambari"+str(n))
-        FQDN["ambari"+str(n)]="ambari"+str(n)+"."+cluster_name+"."+domain_name
+Nodes=[]
+for line in vagrantfile:
+   if "config.vm.define" in line: 
+       Nodes.append(line.split(':')[1].split(' do ')[0].strip()) 
+
+print master_name, Nodes
+if master_name not in Nodes: 
+   print "WARNING: master_node in hiera/configuration.yaml is not present in the Vagrant file, is this correct?/n If not,  modify the configuration file then rerun this script "
+
+FQDN={}
+for node in Nodes: 
+    FQDN[node]=node+"."+cluster_name+"."+domain_name 
+
+
 
 if DEBUG:
  	print FQDN
@@ -51,23 +108,23 @@ dict_values={}
 print "\n","setting hostnames on the VMs\n" 
 
 for node in available_nodes:
-    command="vagrant ssh -c 'hostname "+FQDN[node]+"' "+str(node)
+    command="vagrant ssh -c 'sudo hostname "+FQDN[node]+"' "+str(node)
     if DEBUG:
         print command
     cmd= subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    out, err = cmd.communicate()
     if DEBUG:
-        out, err = cmd.communicate()
         print "Setting in memory hostname for", node 
         print out 
         print err 
 
-    command= 'printf \'HOSTNAME='+str(FQDN[node])+'\\nNETWORKING=yes\\nNISDOMAIN='+cluster_name+'.'+domain_name+"\\n\' >/etc/sysconfig/network"
+    command= 'printf \'HOSTNAME='+str(FQDN[node])+'\\nNETWORKING=yes\\nNISDOMAIN='+cluster_name+'.'+domain_name+"\\n\' | sudo tee /etc/sysconfig/network"
     command='vagrant ssh -c "'+command+'" '+str(node)
     if DEBUG:
         print command 
     cmd= subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    out, err = cmd.communicate()
     if DEBUG:
-        out, err = cmd.communicate()
         print "Setting permanent hostname for", node
         print out
         print err   

@@ -1,10 +1,11 @@
  include base
- # redirect repo request to buildoop VM
  
+  $master_name=hiera(set_master) 
 
   node default {
   include local-repo
   include ipa::client 
+  if hiera(deployment) == 'ambari' {
   package { "ambari-agent":
     ensure => "installed",
     require => Yumrepo[ "ambari-1.x" ]
@@ -15,21 +16,29 @@
   }
   file{'/etc/ambari-agent/conf/ambari-agent.ini':
   ensure => file,
-  source => 'puppet:///files/ambari-agent.ini',
+  content => template('ambari-agent.erb'),
   require => Package["ambari-agent"]
   }
   service { "ambari-agent":
   ensure => "running",
-  require => Package["ambari-agent"],
+  require => [Package["ambari-agent"],Class["base"]],
   subscribe => File["/etc/ambari-agent/conf/ambari-agent.ini"]
   }
   }
+  if hiera(deployment) == 'standalone' {
+  include keedio
+  package { "jdk":
+             ensure => "installed",
+             require => Yumrepo["keedio-1.2"]
+          }
+  }
+  }
 
 
-  node 'master' {
+  node 'master', 'master2' {
   include local-repo
   include keedio
-
+  include mysql-ambari
   include ipa::server
   package { "ambari-server":
     ensure => "installed",
@@ -50,29 +59,75 @@
   file{'/etc/ambari-server/conf/ambari.properties':
   ensure => file,
   source => 'puppet:///files/ambari.properties',
-  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Exec["ambari-setup"]]
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Exec["ambari-setup"]],
+  notify => Service["ambari-server"]
   }
   file{'/usr/lib/ambari-server/web/javascripts/app.js.gz':
   ensure => file,
   source => 'puppet:///files/app.js.gz',
-  require => Package["ambari-server","ambari-agent","ambari-log4j"]
+  require => Package["ambari-server","ambari-agent","ambari-log4j"],
+  notify => Service["ambari-server"]
+  }
+
+  file{'/usr/lib/ambari-server/web/stylesheets/app.css.gz':
+  ensure => file,
+  source => 'puppet:///files/app.css.gz',
+  require => Package["ambari-server","ambari-agent","ambari-log4j"],
+  notify => Service["ambari-server"]
+  }
+  file{'/usr/lib/ambari-server/web/img/keedio':
+  ensure => directory,
+  recurse => true, 
+  source => 'puppet:///files/keedio',
+  require => Package["ambari-server","ambari-agent","ambari-log4j"],
+  notify => Service["ambari-server"]
+  }
+  file{'/usr/lib/ambari-server/web/font':
+  ensure => directory,
+  recurse => true,
+  source => 'puppet:///files/font',
+  require => Package["ambari-server","ambari-agent","ambari-log4j"],
+  notify => Service["ambari-server"]
+  }
+  file{'/var/lib/ambari-server/resources/views/work/ADMIN_VIEW{1.0.0}/styles/main.css':
+  ensure => file,
+  source => 'puppet:///files/main.css',
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Service["ambari-server"]],
+  }
+  file{'/var/lib/ambari-server/resources/views/work/ADMIN_VIEW{1.0.0}/index.html':
+  ensure => file,
+  source => 'puppet:///files/index.html',
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Service["ambari-server"]],
+  }
+  file{'/var/lib/ambari-server/resources/views/work/ADMIN_VIEW{1.0.0}/views/main.html':
+  ensure => file,
+  source => 'puppet:///files/main.html',
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Service["ambari-server"]],
+  }
+  file{'/var/lib/ambari-server/resources/views/work/ADMIN_VIEW{1.0.0}/views/modals/AboutModal.html':
+  ensure => file,
+  source => 'puppet:///files/AboutModal.html',
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Service["ambari-server"]],
+
   }
   file { '/var/lib/ambari-server/resources/stacks/FLUME':
   ensure => 'link',
   target => '/vagrant/files/keedio-stacks/FLUME/',
-  require => Package["ambari-server","ambari-agent","ambari-log4j"]
+  require => Package["ambari-server","ambari-agent","ambari-log4j"],
+  notify => Service["ambari-server"]
   }
   file { '/var/lib/ambari-server/resources/stacks/KEEDIO':
   ensure => 'link',
   target => '/vagrant/files/keedio-stacks/KEEDIO/',
-  require => Package["ambari-server","ambari-agent","ambari-log4j"]
+  require => Package["ambari-server","ambari-agent","ambari-log4j"],
+  notify => Service["ambari-server"]
   }
   exec { "ambari-setup":
   command => "ambari-server setup -s",
   cwd     => "/var/tmp",
   creates => "/var/lib/pgsql/data/postgresql.conf",
   path    => ["/usr/bin", "/usr/sbin","/sbin","/bin"],
-  require => Package["ambari-server","ambari-agent","ambari-log4j"]
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Class["base"]]
   }
   exec { "ambari-setup-jdbc":
   command => "ambari-server setup -s --jdbc-db=mysql --jdbc-driver=/usr/share/java/mysql-connector-java.jar",
@@ -81,6 +136,17 @@
   path    => ["/usr/bin", "/usr/sbin","/sbin","/bin"],
   require => [Package["ambari-server","ambari-agent","ambari-log4j"],Exec["ambari-setup"]]
   }
+  #/var/lib/ambari-server/resources/stacks/HDP/
+  exec { "purge-hdp":
+  command => "rm -rf /var/lib/ambari-server/resources/stacks/HDP/",
+  cwd     => "/var/tmp",
+  onlyif => "/usr/bin/test -e /var/lib/ambari-server/resources/stacks/HDP/",
+  path    => ["/usr/bin", "/usr/sbin","/sbin","/bin"],
+  require => [Package["ambari-server","ambari-agent","ambari-log4j"],Class["base"]],
+  notify => Service["ambari-server"]
+  }
+
+
   service { "ambari-server":
   ensure => "running",
   require => [Package["ambari-server"],Exec["ambari-setup","ambari-setup-jdbc"]],
