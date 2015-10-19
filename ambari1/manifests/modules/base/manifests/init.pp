@@ -79,12 +79,6 @@ if hiera(nameresolution) == 'script' {
       enabled => $isenabled,
       gpgcheck => 0,
   }
-  yumrepo { "ambari-2.0.0Updates":
-      baseurl => "http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.0.0",
-      descr => "Ambari2",
-      enabled => $isenabled,
-      gpgcheck => 0,
-  }
 
   if hiera(development)  {
       yumrepo { "epel-apache-maven":
