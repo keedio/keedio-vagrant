@@ -1,0 +1,33 @@
+---
+# Set here which repository you want to use for the deployments
+# public: repo.keedio.org 
+# office: Keedio´s ffice 
+# local: Local VM Buildoop 
+# cediant: Cediant´s cloud
+repo_address: 'cediant'
+#
+# set the development variable to true if you are a Keedio developer 
+development: false  
+#
+# includes 32 bits development support (only for fw1-loggrabber)
+development_32bits: false 
+#
+# Specify here the deployment type
+# ambari: an ambari cluster will be installed
+# standalone: independent VMs ready for manual installation
+deployment: ambari
+#
+# Enable here free IPA installation
+# which includes LDAP and Kerberos
+# Important if you want your cluster securized 
+ipa:  false 
+#  
+# Specify the name resolution method
+# static: A precompiled file is copied in /etc/hosts (Default for Vairtualbox)
+# script: The post-installation script set-hosts-openstack.py needs to be manually executed (Default for Openstack)  
+nameresolution: 'script'
+#
+# Specify the ambary backend database
+# default: the default db shipped with ambari (postgres) 
+# mysql: mysql running on the master,  requires manual configuration
+ambaridb: 'default' 
