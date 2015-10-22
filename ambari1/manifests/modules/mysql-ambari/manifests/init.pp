@@ -9,9 +9,23 @@ class { '::mysql::server':
 
 mysql::db { 'ambari':
   user     => 'ambari',
-  password => 'ambari',
+  password => hiera(ambari_db_password),
   host     => '%',
   grant    => ['ALL']
+} ->
+
+mysql_user { 'ambari@localhost':
+  ensure                   => 'present',
+  password_hash => mysql_password(hiera(ambari_db_password)),
+} ->
+
+
+mysql_grant { 'ambari@localhost/ambari.*':
+  ensure     => 'present',
+  options    => ['GRANT'],
+  privileges => ['ALL'],
+  table      => 'ambari.*',
+  user       => 'ambari@localhost',
 }
 
 mysql::db { 'oozie':
@@ -19,16 +33,21 @@ mysql::db { 'oozie':
   password => hiera(oozie_db_password),
   host     => '%',
   grant    => ['ALL']
+} ->
+
+mysql_user { 'oozie@localhost':
+  ensure                   => 'present',
+  password_hash => mysql_password(hiera(oozie_db_password)),
+} ->
+
+
+mysql_grant { 'oozie@localhost/oozie.*':
+  ensure     => 'present',
+  options    => ['GRANT'],
+  privileges => ['ALL'],
+  table      => 'oozie.*',
+  user       => 'oozie@localhost',
 }
-
-
-#mysql_grant { 'oozie@%/*.*':
-#  ensure     => 'present',
-#  options    => ['GRANT'],
-#  privileges => ['ALL'],
-#  table      => '*.*',
-#  user       => 'oozie@%',
-#}
 
 
 mysql::db { 'hue':
@@ -36,21 +55,42 @@ mysql::db { 'hue':
   password => hiera(hue_db_password),
   host     => '%',
   grant    => ['ALL']
+} ->
+
+mysql_user { 'hue@localhost':
+  ensure                   => 'present',
+  password_hash => mysql_password(hiera(hue_db_password)),
+} ->
+
+
+mysql_grant { 'hue@localhost/hue.*':
+  ensure     => 'present',
+  options    => ['GRANT'],
+  privileges => ['ALL'],
+  table      => 'hue.*',
+  user       => 'hue@localhost',
 }
 
-#mysql_grant { 'hue@%/hue.*':
-#  ensure     => 'present',
-#  options    => ['GRANT'],
-#  privileges => ['ALL'],
-#  table      => 'hue.*',
-#  user       => 'hue@%',
-#}
 
 mysql::db { 'hive_meta':
   user     => 'hive',
   password => hiera(hive_db_password),
   host     => '%',
   grant    => ['ALL']
+} ->
+
+mysql_user { 'hive@localhost':
+  ensure                   => 'present',
+  password_hash => mysql_password(hiera(hive_db_password)),
+} ->
+
+
+mysql_grant { 'hive@localhost/hive_meta.*':
+  ensure     => 'present',
+  options    => ['GRANT'],
+  privileges => ['ALL'],
+  table      => 'hive_meta.*',
+  user       => 'hive@localhost',
 }
 
 
