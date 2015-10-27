@@ -6,6 +6,12 @@ class { '::mysql::server':
         mysqld => { bind-address => '0.0.0.0'} 
       },
 }
+$set_master=hiera(set_master)
+$set_domain=hiera(set_domain)
+$set_subdomain=hiera(set_subdomain)
+
+
+$master_fqdn = "$set_master.$set_subdomain.$set_domain"
 
 mysql::db { 'ambari':
   user     => 'ambari',
@@ -69,7 +75,20 @@ mysql_grant { 'hue@localhost/hue.*':
   privileges => ['ALL'],
   table      => 'hue.*',
   user       => 'hue@localhost',
-}
+} ->
+
+mysql_user { "hue@$master_fqdn":
+  ensure                   => 'present',
+  password_hash => mysql_password(hiera(hue_db_password)),
+} ->
+
+mysql_grant { "hue@$master_fqdn/hue.*":
+  ensure     => 'present',
+  options    => ['GRANT'],
+  privileges => ['ALL'],
+  table      => 'hue.*',
+  user       => "hue@$master_fqdn",
+}  
 
 
 mysql::db { 'hive_meta':
