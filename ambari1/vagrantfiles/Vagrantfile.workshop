@@ -15,8 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.username = "centos"
   #config.ssh.insert_key = true
   config.ssh.private_key_path = './files/.ssh/id_rsa'
-  config.proxy.http = 'http://proxy.lvtc.gsnet.corp:80'
-  config.proxy.https = 'http://proxy.lvtc.gsnet.corp:80'
+  
 
   # Fixes changes from https://github.com/mitchellh/vagrant/pull/4707
   #config.ssh.insert_key = false
