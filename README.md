@@ -114,7 +114,8 @@ cp configurations/workshop.yaml hiera/configuration.yaml
 Edit the Vagrantfile to select the flavour and the floating IP of each machine. Remove or comment out  the machines that you don't need.
 
 To startup the system in parallel 
-```./para-startup.sh
+```
+./para-startup.sh
 ```
 To set proper name resolution
 ```
