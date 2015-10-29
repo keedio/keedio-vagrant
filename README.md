@@ -89,6 +89,12 @@ And restart with
 vagrant resume
 ``` 
 # keedio-vagrant on the Produban openstack cloud
+
+The machine controller1.keedio.prbes.lab  must be reachable from your workstation. So make sure that you are connected to the Produban VPN and that you have the following line in your /etc/hosts file. 
+```
+180.133.240.102     controller1.keedio.prbes.lab controller1
+```
+
 It's possible to start keedio-vagrant on the Produban cloud using the openstack-provider plugin. You have to install the plugin first.
 ```
 vagrant plugin install vagrant-openstack-provider
@@ -111,7 +117,14 @@ cp vagrantfiles/Vagrantfile.workshop Vagrantfile
 cp configurations/workshop.yaml hiera/configuration.yaml
 ```
 
-Edit the Vagrantfile to select the flavour and the floating IP of each machine. Remove or comment out  the machines that you don't need.
+Edit the Vagrantfile to select the flavour and the floating IP of each machine. Remove or add  the machines as you wish.
+
+Check that you are properly connected with 
+```
+vagrant status
+```
+
+If you get an error, repeate the procedure. If you get the status of the machines  you can proceed.
 
 To startup the system in parallel 
 ```
