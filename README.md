@@ -244,6 +244,28 @@ Then you have to reprovision all the VMs
 vagrant provision
 ```
 
+# Managing passwords 
+
+We use hiera-eyaml to encrypt passwords in the file /keedio-vagrant/ambari1/hiera/secure.eyaml. Full descrition of hiera-email can be found here https://github.com/TomPoulton/hiera-eyaml. Here we give a quick introduction. 
+To install hiera-eyaml 
+```
+gem install hiera-eyaml
+```
+You need to move to ambari1 folder. 
+
+You can view and edit existing passwords with 
+```
+eyaml edit hiera/secure.eyaml
+```
+You can create new encryption  keys with 
+```
+eyaml createkeys
+```
+You can encrypt passwords with 
+```
+eyaml encrypt -s 'password'
+```
+You can take the output and paste it manually into hiera/secure.eyaml using any editor.  
 
 
 
