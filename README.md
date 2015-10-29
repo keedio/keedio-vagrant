@@ -88,7 +88,43 @@ And restart with
 ```
 vagrant resume
 ``` 
+# keedio-vagrant on the Produban openstack cloud
+It's possible to start keedio-vagrant on the Produban cloud using the openstack-provider plugin. You have to install the plugin first.
+```
+vagrant plugin install vagrant-openstack-provider
+```
+You also have to install GNU parallel to run parallel scripts, on the Mac
+```
+brew install parallel
+```
+In order to access the cloud you have to download the "Openstack RC file" in the "Access and Security" section of Horizon interface. The filename is $USER_openrc.sh.
+Before starting any vagrant-openstack session you have to source it
+```
+source $USER_openrc.sh
+```
+You will be prompted for you openstack password. Input it. 
 
+Go in the ambari1 directory and prepare the Vagrantfile and the configuration.yaml
+```
+cd keedio-vagrant/ambari1 
+cp vagrantfiles/Vagrantfile.workshop Vagrantfile
+cp configurations/workshop.yaml hiera/configuration.yaml
+```
+
+Edit the Vagrantfile to select the flavour and the floating IP of each machine. Remove or comment out  the machines that you don't need.
+
+To startup the system in parallel 
+```./para-startup.sh
+```
+To set proper name resolution
+```
+python set-hosts-openstack.py
+```
+At the end you will get a summary table that should be pasted into the /etc/hosts file of your workstation.
+Then you can run the parallel puppet provisioner
+```
+./para-provision.sh
+```
 # keedio-vagrant on the Cediant openstack cloud 
 
 It's possible to start keedio-vagrant on the Cediant cloud using the openstack-provider plugin. You have to install the plugin first.
