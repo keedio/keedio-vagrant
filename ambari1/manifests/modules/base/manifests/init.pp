@@ -12,7 +12,7 @@ user { "apache":
  require => Group['apache']
 }
 
-
+contain spacewalk
 
 group { 'puppet':
   ensure => "present",

@@ -257,7 +257,7 @@ config.vm.define :ambari9 do |node|
   # # }
   #
    config.vm.provision :puppet, 
-     :options => ["--fileserverconfig=/vagrant/fileserver.conf","--pluginsync"],
+     :options => ["--fileserverconfig=/vagrant/fileserver.conf","--pluginsync","--templatedir","/vagrant/templates"],
      :facter => { "fqdn" => "vagrant.vagrantup.com" } do |puppet| 
      puppet.manifests_path = "manifests"
      puppet.module_path = "manifests/modules"
