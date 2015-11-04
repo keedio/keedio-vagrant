@@ -26,18 +26,12 @@
   }
   }
   if hiera(deployment) == 'standalone' {
-  include keedio
-  package { "jdk":
-             ensure => "installed",
-             require => Yumrepo["keedio-1.2"]
-          }
   }
   }
 
 
   node 'master', 'master2' {
   include local-repo
-  include keedio
   include mysql-ambari
   include ipa::server
   package { "ambari-server":
@@ -51,10 +45,6 @@
   package { "ambari-log4j":
     ensure => "installed",
     require => Yumrepo[ "ambari-1.x" ]
-  }
-  package { "jdk":
-    ensure => "present",
-    require => Yumrepo[ "keedio-1.2" ]
   }
   file{'/etc/ambari-server/conf/ambari.properties':
   ensure => file,
@@ -166,7 +156,6 @@
   }
  
   node buildoop {
-  include keedio
   if hiera(development) {
      class { 'groovy': 
      }
@@ -183,10 +172,6 @@
   package { "redhat-rpm-config": ensure => "installed"}
   package { "rpm-build": ensure => "installed"}
   package { "gcc-c++": ensure => "installed"}
-  package { "jdk": 
-             ensure => "installed",
-             require => Yumrepo["keedio-1.2"]
-          }
   if hiera(development_32bits)    {
      package { "glibc-devel.i686": ensure => "installed"}
      package { "elfutils-libelf.i686": ensure => "installed"}
@@ -194,7 +179,7 @@
   }
   file {"/etc/profile.d/buildoop.sh":
          ensure  => "present",
-         content => "export JAVA_HOME=/usr/java/jdk1.7.0_51\nexport PATH=/usr/java/jdk1.7.0_51/bin:\$PATH\nexport MAVEN_OPTS='-Xms512m -Xmx1024m'"}
+         content => "export JAVA_HOME=/usr/java/default\nexport PATH=/usr/java/default/bin:\$PATH\nexport MAVEN_OPTS='-Xms512m -Xmx1024m'"}
   file_line{'repo_root':
             path =>'/etc/httpd/conf/httpd.conf',
             line =>'DocumentRoot "/var/www/html/repo"',
