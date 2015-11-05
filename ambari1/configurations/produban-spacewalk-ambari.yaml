@@ -23,12 +23,15 @@ deployment: ambari
 ipa:     false 
 #  
 # Specify the name resolution method
-# static: A precompiled file is copied in /etc/hosts (Default for Vairtualbox)
+# static: A precompiled file is copied in /etc/hosts (Default for Virtualbox)
 # script: The post-installation script set-hosts-openstack.py needs to be manually executed (Default for Openstack)  
 nameresolution: 'script'
 #
 # Set it to true to disable repositories, this is useful when repos are already available on the system
 disable_repos: true
+# Set here Satellite details
+satellite: false 
+
 # Specify the ambary backend database
 # default: the default db shipped with ambari (postgres) 
 # mysql: mysql running on the master,  requires manual configuration

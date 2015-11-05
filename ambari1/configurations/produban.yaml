@@ -20,32 +20,31 @@ deployment: ambari
 # Enable here free IPA installation
 # which includes LDAP and Kerberos
 # Important if you want your cluster securized 
-ipa:     true 
+ipa:     false 
 #  
 # Specify the name resolution method
-# static: A precompiled file is copied in /etc/hosts (Default for Vairtualbox)
+# static: A precompiled file is copied in /etc/hosts (Default for Virtualbox)
 # script: The post-installation script set-hosts-openstack.py needs to be manually executed (Default for Openstack)  
 nameresolution: 'script'
 #
+# Set it to true to disable repositories, this is useful when repos are already available on the system
+disable_repos: true
+# Set here Satellite details
+satellite: true
+satellite_server: 'https://spacewalk.keedio.prbes.lab/XMLRPC'
+satellite_public_repo: 'http://spacewalk.keedio.prbes.lab/pub/spacewalk-client-el6'
+certificate_rpm: 'http://spacewalk.keedio.prbes.lab/pub/rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm'
+certificate_name: 'rhn-org-trusted-ssl-cert-1.0-1'
+
 # Specify the ambary backend database
 # default: the default db shipped with ambari (postgres) 
 # mysql: mysql running on the master,  requires manual configuration
 ambaridb: 'default'
-#
-# Set it to true to disable repositories, this is useful when repos are already available on the system 
-disable_repos: false
-# Set here Satellite details
-satellite: true
-satellite_server: 'https://repo.keedio.com/XMLRPC'
-satellite_public_repo: 'http://repo.keedio.com/pub/spacewalk-client-el6'
-certificate_rpm: 'http://repo.keedio.com/pub/rhn-org-trusted-ssl-cert-1.0-2.noarch.rpm'
-certificate_name: 'rhn-org-trusted-ssl-cert-1.0-2'
-#
-# Set here the main domain name 
-set_domain: 'keedio.org' 
+# Set here the main domain name
+set_domain: 'prbes.lab'
 # Set here the subdomain name
-set_subdomain: 'ambari'
+set_subdomain: 'keedio'
 #set here the relam
-set_realm: 'KEEDIO.ORG'
-# set master here for multiclustering
-set_master: 'master' 
+set_realm: 'PRBES.LAB'
+# set master here for multiclaustering
+# set_master: 'master2' 

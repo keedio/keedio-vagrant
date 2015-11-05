@@ -26,6 +26,11 @@ ipa: false
 # script: The post-installation script set-hosts-openstack.py needs to be manually executed (Default for Openstack)  
 nameresolution: 'static'
 #
+
+# Set here Satellite details
+# set this to false if you want to use ambari spacewalk service
+satellite: true
+
 # Specify the ambary backend database
 # default: the default db shipped with ambari (postgres) 
 # mysql: mysql running on the master,  requires manual configuration

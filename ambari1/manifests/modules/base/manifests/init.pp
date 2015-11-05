@@ -12,7 +12,9 @@ user { "apache":
  require => Group['apache']
 }
 
-contain spacewalk
+if hiera(satellite) == true {
+      contain spacewalk
+}
 
 group { 'puppet':
   ensure => "present",
