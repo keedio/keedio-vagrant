@@ -17,6 +17,64 @@ You have to use it in the setup process.
 As an alternative you can package your own repository using buildoop and you can tell keedio-vagrant to use default yum repositories by setting the variable satellite: false in ./hiera/configuration.yaml.
 
 
+#Setup the cluster
+The following procedure is required and independent from hypervisor or cloud provider.
+```
+./setup.sh
+####################################################
+Setting up environment for Keedio Stack deployment
+This will use default encryption keys and passwords
+Please use setup_secure.sh if you want to change them
+#####################################################
+[hiera-eyaml-core] hiera-eyaml (core): 2.0.8
+Please provide the activation key:
+####################################################
+The hiera/secure.eyaml file has been created
+You can check the values and modify it with the command
+
+eyaml edit hiera/secure.eyaml
+#####################################################
+```
+## Optional: setup the cluster in secure mode
+
+To generate new encryption keys, and set non default password you can issue the foillowing command:
+```
+./setup_secure.sh
+
+####################################################
+Setting up environment for Keedio Stack deployment
+This will use default encryption keys and passwords
+Please use setup_secure.sh if you want to change them
+#####################################################
+[hiera-eyaml-core] hiera-eyaml (core): 2.0.8
+Creating Hiera encryption keys
+Are you sure you want to overwrite "./keys/private_key.pkcs7.pem"? (y/N): y
+Are you sure you want to overwrite "./keys/public_key.pkcs7.pem"? (y/N): y
+[hiera-eyaml-core] Keys created OK
+Please provide the activation key:
+Please provide the admin password for the backend database:[adminadmin]
+Please provide the hue user password for the backend database:[hue]
+Please provide the hive user password for the backend database:[hive]
+Please provide the oozie user password for the backend database:[oozie]
+Please provide the ambari user password for the backend database:[bigdata]
+Please provide the Free IPA admin password:[adminadmin]
+Please provide the Ambari admin password:[admin]
+####################################################
+The hiera/secure.eyaml file has been created
+You can check the values and modify it with the command
+
+eyaml edit hiera/secure.eyaml
+#####################################################
+Making a backup-copy of the existing ssh keys in ./files/ssh-backup
+Generating new ssh keys in ./files/.ssh/
+Generating public/private rsa key pair.
+./files/.ssh/id_rsa already exists.
+Overwrite (y/n)? y
+Your identification has been saved in ./files/.ssh/id_rsa.
+Your public key has been saved in ./files/.ssh/id_rsa.pub.
+The key fingerprint is...
+```
+
 # Keedio-vagrant with Virtualbox
 
 ##Preliminary steps
@@ -45,29 +103,8 @@ cd  ambari1
 cp vagrantfiles/Vagrantfile.virtualbox Vagrantfile
 cp configurations/standard-user.yaml hiera/configuration.yaml
 ```
-Setup the cluster 
-```
-./setup.sh
-####################################################
-Setting up environment for Keedio Stack deployment
-This will use default encryption keys and passwords
-Please use setup_secure.sh if you want to change them
-#####################################################
-[hiera-eyaml-core] hiera-eyaml (core): 2.0.8
-Please provide the activation key:
-####################################################
-The hiera/secure.eyaml file has been created
-You can check the values and modify it with the command
 
-eyaml edit hiera/secure.eyaml
-#####################################################
-```
-## Optional: setup the cluster in secure mode
 
-To generate new encryption keys, and set non default password you can issue the foillowing command:
-```
-./setup_secure.sh
-```
 
 
 ##Start the cluster
