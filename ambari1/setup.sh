@@ -21,37 +21,31 @@ fi
 
 echo "Please provide the activation key:" 
 read -s key
-block=`eyaml encrypt -s $key -o block`
-echo "activation_key: >" > ./hiera/secure.eyaml
-echo $block >> ./hiera/secure.eyaml
+block=`eyaml encrypt -s $key -o string`
+echo "activation_key:" $block > ./hiera/secure.eyaml
 
-block=`eyaml encrypt -s adminadmin -o block`
-echo "db_password: >" >> ./hiera/secure.eyaml
-echo $block >> ./hiera/secure.eyaml
 
-block=`eyaml encrypt -s hue -o block`
-echo "hue_db_password: >" >> ./hiera/secure.eyaml
-echo $block >> ./hiera/secure.eyaml
+block=`eyaml encrypt -s adminadmin -o string`
+echo "db_password:" $block  >> ./hiera/secure.eyaml
 
-block=`eyaml encrypt -s hive -o block`
-echo "hive_db_password: >" >> ./hiera/secure.eyaml
-echo $block >> ./hiera/secure.eyaml
+block=`eyaml encrypt -s hue -o string`
+echo "hue_db_password:" $block >> ./hiera/secure.eyaml
 
-block=`eyaml encrypt -s oozie -o block`
-echo "oozie_db_password: >" >> ./hiera/secure.eyaml
-echo $block >> ./hiera/secure.eyaml
+block=`eyaml encrypt -s hive -o string`
+echo "hive_db_password:" $block >> ./hiera/secure.eyaml
 
-block=`eyaml encrypt -s bigdata -o block`
-echo "ambari_db_password: >" >> ./hiera/secure.eyaml
-echo $block >> ./hiera/secure.eyaml
+block=`eyaml encrypt -s oozie -o string`
+echo "oozie_db_password:" $block >> ./hiera/secure.eyaml
 
-block=`eyaml encrypt -s adminadmin -o block`
-echo "ipa_password: >" >> ./hiera/secure.eyaml
-echo $block >> ./hiera/secure.eyaml
+block=`eyaml encrypt -s bigdata -o string`
+echo "ambari_db_password:" $block >> ./hiera/secure.eyaml
 
-block=`eyaml encrypt -s admin -o block`
-echo "ambari_password: >" >> ./hiera/secure.eyaml
-echo $block >> ./hiera/secure.eyaml
+block=`eyaml encrypt -s adminadmin -o string`
+echo "ipa_password:" $block >> ./hiera/secure.eyaml
+
+block=`eyaml encrypt -s admin -o string`
+echo "ambari_password:" $block >> ./hiera/secure.eyaml
+
 
 
 
