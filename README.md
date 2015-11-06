@@ -1,10 +1,19 @@
 # keedio-vagrant
 
+
+
 ## Introduction
 This is a Vagrant based test environment, designed to test the integration of the different packages of the Keedio software stack, which can be used to deploy virtual clusters using either Ambari or by manually configuring the services.
 A hiera based configuration file can be used to adapt Keedio-vagrant to different environments and requirements. 
 By default it uses the Keedio public repository to install the packages. To limit the external bandwidth requirement, a local mirror of the main keedio repository repo.keedio.org can be created in a VM called buildoop. The same VM contains the buildoop packaging system and can be used to build new versions of the software components. These new versions can then be deployed to the test VMs using the local repo.
 The vagrant plugin "vagrant-vbox-snapshot" can be used to snapshot the state of the cluster, and move easily back and forward in time by selecting the right snapshot.
+
+
+## Obtaining access to Keedio stack
+Keedio uses Red Hat satellite to manage the distribution of its Keedio stack, in order to install the Keedio stack you need to request an activation code.   You can request it here  https://www.keedio.org/demo/
+
+
+As an alternative you can package your own repository using buildoop and you can tell keedio-vagrant to use default yum repositories by setting the variable satellite: false in hiera/configuration.yaml.
 
 
 # Keedio-vagrant with Virtualbox
