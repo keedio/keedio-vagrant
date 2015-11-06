@@ -10,10 +10,11 @@ The vagrant plugin "vagrant-vbox-snapshot" can be used to snapshot the state of 
 
 
 ## Obtaining access to Keedio stack
-Keedio uses Red Hat satellite to manage the distribution of its Keedio stack, in order to install the Keedio stack you need to request an activation code.   You can request it here  https://www.keedio.org/demo/
+Keedio uses Red Hat satellite to manage the distribution of its Keedio stack, in order to install it stack you need to request an activation code.   You can request it here  https://www.keedio.org/demo/
 
+You have to use it in the setup process. 
 
-As an alternative you can package your own repository using buildoop and you can tell keedio-vagrant to use default yum repositories by setting the variable satellite: false in hiera/configuration.yaml.
+As an alternative you can package your own repository using buildoop and you can tell keedio-vagrant to use default yum repositories by setting the variable satellite: false in ./hiera/configuration.yaml.
 
 
 # Keedio-vagrant with Virtualbox
@@ -44,37 +45,30 @@ cd  ambari1
 cp vagrantfiles/Vagrantfile.virtualbox Vagrantfile
 cp configurations/standard-user.yaml hiera/configuration.yaml
 ```
-##Optional: create local repositories
-Start the buildoop VM
+Setup the cluster 
 ```
-vagrant up buildoop
+./setup.sh
+####################################################
+Setting up environment for Keedio Stack deployment
+This will use default encryption keys and passwords
+Please use setup_secure.sh if you want to change them
+#####################################################
+[hiera-eyaml-core] hiera-eyaml (core): 2.0.8
+Please provide the activation key:
+####################################################
+The hiera/secure.eyaml file has been created
+You can check the values and modify it with the command
+
+eyaml edit hiera/secure.eyaml
+#####################################################
+```
+## Optional: setup the cluster in secure mode
+
+To generate new encryption keys, and set non default password you can issue the foillowing command:
+```
+./setup_secure.sh
 ```
 
-Enter in the VM, become root and replicate the yum repos
-```
-vagrant ssh buildoop
-sudo su
-python /vagrant/sync-localrepo.py
-```
-
-Answer "Yes" to all the repositories that you want to replicate. At the moment keedio-1.2, keedio-1.2-updates, and keedio-1.2-develop are supported. This will take several minutes. 
-When the process is complete you can check the status of your repo by pointing your browser to http://buildoop/openbus/
-
-### Optional: Installing third party proprietary libraries
-
-```
-/vagrant/opsec-setup.sh
-```
- 
-Exit from the buildoop VM
-```
-exit
-```
-Modify the hiera/configuration.yaml file to use the local repositories
-
-```
-repo_address: 'local'
-```
 
 ##Start the cluster
 You can now start your ambari cluster, you should always start the master machine, and a number of slaves (ambari1, ambari2, ambari3...)
