@@ -30,10 +30,11 @@
   }
 
 
-  node 'master', 'master2' {
+  node 'master', 'master2', 'isban1' {
   include local-repo
   include mysql-ambari
   include ipa::server
+  if hiera(deployment) == 'ambari' {
   package { "ambari-server":
     ensure => "installed",
     require => Yumrepo[ "ambari-1.x","Updates-ambari-1.x" ]
@@ -153,6 +154,9 @@
   require => Package["ambari-agent"],
   subscribe => File["/etc/ambari-agent/conf/ambari-agent.ini"]
   }
+
+  } 
+# End if deployment ambari
   }
  
   node buildoop {

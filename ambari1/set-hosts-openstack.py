@@ -27,6 +27,12 @@ master_name=master_name.replace('\n','')
 master_name=master_name.replace('\'','')
 master_name=master_name.replace(' ','')
 
+#Check if Deployment uses ambari 
+cmd= subprocess.Popen("grep -v '#' hiera/configuration.yaml| grep 'deployment'|head -1|  awk '{ print $2}'",shell=True,stdout=subprocess.PIPE)
+deployment, err=cmd.communicate()
+deployment=deployment.replace('\n','')
+deployment=deployment.replace('\'','')
+deployment=deployment.replace(' ','')
 
 if not cluster_name or not domain_name:
      print "Domain information not found in configuration.yaml, reverting to default"
@@ -155,7 +161,11 @@ if DEBUG:
 try:
     file.write("class  host-manager  {\n")
     for node in available_nodes:
-        fileline="file_line{\'"+node+"_line\':\n           path => \'/etc/hosts\',\n           line => \'"+dict_values[node][1]+"  "+dict_values[node][0]+"  "+ str(node)+"\',\n        notify  => Service['ambari-agent'],\n          ensure => \'present\',\n          }\n"
+        if deployment == 'ambari':
+           fileline="file_line{\'"+node+"_line\':\n           path => \'/etc/hosts\',\n           line => \'"+dict_values[node][1]+"  "+dict_values[node][0]+"  "+ str(node)+"\',\n        notify  => Service['ambari-agent'],\n          ensure => \'present\',\n          }\n"
+        else:
+           fileline="file_line{\'"+node+"_line\':\n           path => \'/etc/hosts\',\n           line => \'"+dict_values[node][1]+"  "+dict_values[node][0]+"  "+ str(node)+"\',\n          ensure => \'present\',\n          }\n"
+           
         file.write(fileline)
 
     file.write("}")
