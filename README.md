@@ -17,6 +17,24 @@ You have to use it in the setup process.
 As an alternative you can package your own repository using buildoop and you can tell keedio-vagrant to use default yum repositories by setting the variable satellite: false in ./hiera/configuration.yaml.
 
 
+#Preliminary steps
+
+Install Vagrant and Virtualbox before starting.  
+Make sure you install the vagrant snapshotting plugin for virtualbox 
+```
+vagrant plugin install vagrant-vbox-snapshot
+```
+Install hiera-eyaml ruby gem
+```
+gem install hiera-eyaml
+```
+Download the keedio-vagrant stack
+
+```
+git clone --recursive https://github.com/keedio/keedio-vagrant.git
+cd  keedio-vagrant
+```
+
 #Setup the cluster
 The following procedure is required and independent from hypervisor or cloud provider.
 ```
@@ -79,19 +97,6 @@ The key fingerprint is...
 
 ##Preliminary steps
 
-Install Vagrant and Virtualbox before starting.  
-Make sure you install the vagrant snapshotting plugin for virtualbox 
-```
-vagrant plugin install vagrant-vbox-snapshot
-```
-
-
-Download the keedio-vagrant stack
-
-```
-git clone --recursive https://github.com/keedio/keedio-vagrant.git
-cd  keedio-vagrant
-```
 
 Populate the /etc/hosts of your machine with the provided information
 ```
