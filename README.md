@@ -95,7 +95,7 @@ The key fingerprint is...
 
 # Keedio-vagrant with Virtualbox
 
-##Preliminary steps
+## Preliminary steps
 
 
 Populate the /etc/hosts of your machine with the provided information
@@ -133,148 +133,64 @@ And restart with
 ```
 vagrant resume
 ``` 
-# keedio-vagrant on the Produban openstack cloud
+# keedio-vagrant on Azure
 
-The machine controller1.keedio.prbes.lab  must be reachable from your workstation. So make sure that you are connected to the Produban VPN and that you have the following line in your /etc/hosts file. 
-```
-180.133.240.102     controller1.keedio.prbes.lab controller1
-```
+## Preliminary steps
 
-It's possible to start keedio-vagrant on the Produban cloud using the openstack-provider plugin. You have to install the plugin first.
-```
-vagrant plugin install vagrant-openstack-provider
-```
-You also have to install GNU parallel to run parallel scripts, on the Mac
-```
-brew install parallel
-```
-In order to access the cloud you have to download the "Openstack RC file" in the "Access and Security" section of Horizon interface. The filename is $USER_openrc.sh.
-Before starting any vagrant-openstack session you have to source it
-```
-source $USER_openrc.sh
-```
-You will be prompted for you openstack password. Input it. 
+For use Azure for deployment you need the following things:
 
-Go in the ambari1 directory and prepare the Vagrantfile and the configuration.yaml
-```
-cd keedio-vagrant/ambari1 
-cp vagrantfiles/Vagrantfile.workshop Vagrantfile
-cp configurations/workshop.yaml hiera/configuration.yaml
-```
+	- At least a trial account on Microsoft Azure.
+	- Install Azure-cli (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+	- Install the Vagrant plugin for Azure
 
-Edit the Vagrantfile to select the flavour and the floating IP of each machine. Remove or add  the machines as you wish.
+## Installing Azure CLI
 
-Check that you are properly connected with 
-```
-vagrant status
-```
+There are two ways:
 
-If you get an error, repeate the procedure. If you get the status of the machines  you can proceed.
+	- With Node.js: if you have Node.js installed on your compute, you only need to execute the next command.
+	```
+	npm install -g azure-cli
+	```
 
-To startup the system in parallel 
-```
-./para-startup.sh
-```
-To set proper name resolution
-```
-python set-hosts-openstack.py
-```
-At the end you will get a summary table that should be pasted into the /etc/hosts file of your workstation.
-Then you can run the parallel puppet provisioner
-```
-./para-provision.sh
-```
-# keedio-vagrant on the Cediant openstack cloud 
+	- Without Node.js: if Node.js isn't installed on your compute, you can try install it with the Microsoft install notes for Azure CLI
+	
+## Configuring Azure CLI
 
-It's possible to start keedio-vagrant on the Cediant cloud using the openstack-provider plugin. You have to install the plugin first.
-```
-vagrant plugin install vagrant-openstack-provider
-```
-
-In order to access the cloud you have to download the "Openstack RC file" in the "Access and Security" section of Horizon interface. The filename is $USER_openrc.sh.
-Before starting any vagrant-openstack session you have to source it
-```
-source $USER_openrc.sh
-```
-You will be prompted for you openstack password. Input it. 
-
-Go in the ambari1 directory and prepare the Vagrantfile and the configuration.yaml
-```
-cd keedio-vagrant/ambari1 
-cp vagrantfiles/Vagrantfile.openstack Vagrantfile
-cp configurations/openstack-cediant.yaml hiera/configuration.yaml
-```
-
-After that you can start you VMs with vagrant up adding a flag to specify the openstack provider. Buildoop is not required, as the Cediant cloud local repo will be used.
+In order to interact with Azure machines, we'll need to download our Publish Settings file. That file contains secure credentians and additional information about our Azure subscriptions:
 
 ```
-vagrant up master ambari1 ambari2
+azure account download
+```
+If that doesn't launch your browser, just browse to that URL manually.
+
+When we have the file (extension .publishsettings), we need to import it:
+
+```
+azure account import ~/Downloads/*.publishsettings
 ```
 
-This version of openstack doesn't export "metadata" to the guests, so the hostsnames and name resolution is not set. We need to to execute a script to fix it. In the directory ambari1 issue 
+NOTE: It's a good idea to remove it once it has been imported.
+
+If you want to be sure that it have been imported:
+
 ```
-#python set-hosts-openstack.py
-
-########################################################
-KEEDIO-VAGRANT
-Automatic population of /etc/hosts for cloud environment
-########################################################
-
-Collecting information about available nodes
-
-master                    active (openstack)
-ambari1                   active (openstack)
-ambari2                   active (openstack)
-Available nodes:
-['master', 'ambari1', 'ambari2']
-
-setting hostnames on the VMs
-
-...
-
-master
-Private IP: 192.168.0.6
-Floating IP: 10.129.135.119
-
-ambari1
-Private IP: 192.168.0.2
-Floating IP: 10.129.135.118
-
-ambari2
-Private IP: 192.168.0.3
-Floating IP: 10.129.135.167
-
-Add the following lines to your local /etc/hosts
-
-#Cluster ambari /etc/hosts section starts here###
-10.129.135.119  master.ambari.keedio.org  master
-10.129.135.118  ambari1.ambari.keedio.org  ambari1
-10.129.135.167  ambari2.ambari.keedio.org  ambari2
-#Cluster ambari /etc/hosts section end here######
-
-
-!!!Remember to run the following command!!!
- vagrant provision
- ```
-It is useful to copy and paste the section 
+azure account list
 ```
-#Cluster ambari /etc/hosts section starts here###
-10.129.135.119  master.ambari.keedio.org  master
-10.129.135.118  ambari1.ambari.keedio.org  ambari1
-10.129.135.167  ambari2.ambari.keedio.org  ambari2
-#Cluster ambari /etc/hosts section end here######
-```
-in the /etc/hosts file of your workstation. Rememebr to remove ti when you destroy the cluster.
+This information will be stored in plain text at ~/.azure/azureProfile.json.
 
-This script has now populated a puppet module, so you can now propagate the configuration changes with 
-```
-vagrant provision
-```
-You should be able to point your browser to master.ambari.keedio.org:8080 and install your cluster.
+## Generating keys for Azure deployments
 
-Notice: everytime you install a new host in the cluster, you have to repeat the execution of the  script and the vagrant provision steps. The script is cusomizable, and you can select different cluster and domain names for your cluster.  
+The Azure provider seems to only like PEM files with both the public and private keys, and X509 certificates, so let’s get us some of that:
 
-## Know problems
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ~/.ssh/azurevagrant.key -out ~/.ssh/azurevagrant.key
+chmod 600 ~/.ssh/azurevagrant.key
+openssl x509 -inform pem -in ~/.ssh/azurevagrant.key -outform der -out ~/.ssh/azurevagrant.cer
+```
+The .cer file contains our public key, but the .pem file contains both our public and private keys, so we’ll need to secure it appropriately.
+Now we can upload that .cer file as a management certificate in Azure using the browser.
+
+# Know problems
 
 If you delete VMs in horizon, vagrant will enter an invalid state and you will be forced to start from scratch. 
 
