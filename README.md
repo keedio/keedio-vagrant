@@ -129,30 +129,30 @@ vagrant suspend
 ```
 
 And restart with 
-
 ```
-vagrant resume
 
+vagrant resume
+```
 # Keedio-vagrant on Azure
 
 ## Preliminary steps
 
 For use Azure for deployment you need the following things:
 
-	- At least a trial account on Microsoft Azure.
-	- Install Azure-cli (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-	- Install the Vagrant plugin for Azure
+- At least a trial account on Microsoft Azure.
+- Install Azure-cli (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+- Install the Vagrant plugin for Azure
 
 ## Installing Azure CLI
 
 There are two ways:
 
-	- With Node.js: if you have Node.js installed on your compute, you only need to execute the next command.
-	
+- With Node.js: if you have Node.js installed on your compute, you only need to execute the next command.
+	```
 	npm install -g azure-cli
-	
+	```
 
-	- Without Node.js: if Node.js isn't installed on your compute, you can try install it with the Microsoft install notes for Azure CLI
+- Without Node.js: if Node.js isn't installed on your compute, you can try install it with the Microsoft install notes for Azure CLI
 	
 ## Configuring Azure CLI
 
