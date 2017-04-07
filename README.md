@@ -112,7 +112,7 @@ cp configurations/standard-user.yaml hiera/configuration.yaml
 
 
 
-##Start the cluster
+Start the cluster:
 You can now start your ambari cluster, you should always start the master machine, and a number of slaves (ambari1, ambari2, ambari3...)
 
 ```
@@ -133,7 +133,7 @@ And restart with
 ```
 vagrant resume
 ``` 
-# keedio-vagrant on Azure
+# Keedio-vagrant on Azure
 
 ## Preliminary steps
 
@@ -148,9 +148,9 @@ For use Azure for deployment you need the following things:
 There are two ways:
 
 	- With Node.js: if you have Node.js installed on your compute, you only need to execute the next command.
-	```
+	
 	npm install -g azure-cli
-	```
+	
 
 	- Without Node.js: if Node.js isn't installed on your compute, you can try install it with the Microsoft install notes for Azure CLI
 	
