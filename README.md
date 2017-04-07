@@ -123,14 +123,13 @@ this can take several minutes, when it is complete you should be able to access 
 
  
 You can suspend the execution of all the VMs with
-
 ```
 vagrant suspend
 ```
 
 And restart with 
-```
 
+```
 vagrant resume
 ```
 # Keedio-vagrant on Azure
@@ -145,15 +144,17 @@ For use Azure for deployment you need the following things:
 
 ## Installing Azure CLI
 
-There are two ways:
+You can try install it with the Microsoft install notes for Azure CLI (strongly recommended):
 
-- With Node.js: if you have Node.js installed on your compute, you only need to execute the next command.
-	```
-	npm install -g azure-cli
-	```
+```
+curl -L https://aka.ms/InstallAzureCli | bash
+```
+You must restart the shell:
 
-- Without Node.js: if Node.js isn't installed on your compute, you can try install it with the Microsoft install notes for Azure CLI
-	
+```
+exec -l $SHELL
+```
+
 ## Configuring Azure CLI
 
 In order to interact with Azure machines, we'll need to download our Publish Settings file. That file contains secure credentians and additional information about our Azure subscriptions:
