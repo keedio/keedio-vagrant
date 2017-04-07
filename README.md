@@ -132,7 +132,7 @@ And restart with
 
 ```
 vagrant resume
-``` 
+
 # Keedio-vagrant on Azure
 
 ## Preliminary steps
