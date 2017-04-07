@@ -1,7 +1,6 @@
 ---
 # Set here which repository you want to use for the deployments
-# public: repo.keedio.org 
-# office: Keedio´s ofice 
+# public: repo.keedio.com
 # local: Local VM Buildoop 
 repo_address: 'public'
 #
@@ -23,7 +22,7 @@ ipa: false
 #  
 # Specify the name resolution method
 # static: A precompiled file is copied in /etc/hosts (Default for Vairtualbox)
-# script: The post-installation script set-hosts-openstack.py needs to be manually executed (Default for Openstack)  
+# script: The post-installation script Azure-hosts needs to be manually executed (Default for Azure)  
 nameresolution: 'static'
 #
 # Specify the ambary backend database
