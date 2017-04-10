@@ -157,27 +157,17 @@ exec -l $SHELL
 
 ## Configuring Azure CLI
 
-In order to interact with Azure machines, we'll need to download our Publish Settings file. That file contains secure credentians and additional information about our Azure subscriptions:
+In order to interact with Azure machines, we'll need to do login in our Azure's account. Execute the next command and follow the steps printed on the screen:
 
 ```
-azure account download
-```
-If that doesn't launch your browser, just browse to that URL manually.
-
-When we have the file (extension .publishsettings), we need to import it:
-
-```
-azure account import ~/Downloads/*.publishsettings
+az login
 ```
 
-NOTE: It's a good idea to remove it once it has been imported.
-
-If you want to be sure that it have been imported:
+If you want to be sure that it have been logged:
 
 ```
-azure account list
+az account list
 ```
-This information will be stored in plain text at ~/.azure/azureProfile.json.
 
 ## Generating keys for Azure deployments
 
