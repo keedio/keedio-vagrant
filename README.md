@@ -1,7 +1,6 @@
 # keedio-vagrant
 
 
-
 ## Introduction
 This is a Vagrant based test environment, designed to test the integration of the different packages of the Keedio software stack, which can be used to deploy virtual clusters using either Ambari or by manually configuring the services.
 A hiera based configuration file can be used to adapt Keedio-vagrant to different environments and requirements. 
@@ -257,6 +256,128 @@ vagrant provision
 ```
 
 NOTE: This phase can take a long time, so you can go for a coffee and take a break. 
+
+# Keedio-vagrant on Azure
+
+## Preliminary steps
+
+For use Azure for deployment you need the following things:
+
+- At least a trial account on Microsoft Azure.
+- Install Azure-cli (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+- Install the Vagrant plugin for Azure
+
+## Installing Azure CLI
+
+You can try install it with the Microsoft install notes for Azure CLI (strongly recommended):
+
+```
+curl -L https://aka.ms/InstallAzureCli | bash
+```
+You must restart the shell:
+
+```
+exec -l $SHELL
+```
+
+## Configuring Azure CLI
+
+In order to interact with Azure machines, we'll need to do login in our Azure's account. Execute the next command and follow the steps printed $
+
+```
+az login
+```
+
+If you want to be sure that it have been logged:
+
+```
+az account list
+```
+
+## Generating keys for Azure deployments
+
+The Azure provider seems to only like PEM files with both the public and private keys, and X509 certificates, so let’s get us some of that:
+
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ~/.ssh/azurevagrant.key -out ~/.ssh/azurevagrant.key
+chmod 600 ~/.ssh/azurevagrant.key
+openssl x509 -inform pem -in ~/.ssh/azurevagrant.key -outform der -out ~/.ssh/azurevagrant.cer
+```
+The .cer file contains our public key, but the .pem file contains both our public and private keys, so we’ll need to secure it appropriately.
+Now we can upload that .cer file as a management certificate in Azure using the browser.
+
+# Install the Azure Vagrant plugin
+
+```
+vagrant plugin install vagrant-azure --plugin-version '2.0.0.pre6'
+```
+
+# Export env variables
+In order to use Azure Vagrant you will need to export some variables. First of all, we need to get some info:
+
+```
+az ad sp create-for-rbac
+```
+
+Keep an eye on the output, you are going to need it.
+
+The list of variables is the following:
+
+- AZ_VM_SIZE=ENV["AZ_VM_SIZE"] || "Standard_D1_v2" (Default value)
+- AZ_RESOURCE_GROUP_NAME=ENV["AZ_RESOURCE_GROUP_NAME"] || "KDSRG" (Default value)
+- AZ_KEYPAIR_PATH=ENV["AZ_KEYPAIR_PATH"]
+- AZ_SUBCRIPTION_ID=ENV["AZ_SUBCRIPTION_ID"]
+- AZ_TENANT_ID=ENV["AZ_TENANT_ID"]
+- AZ_CLIENT_ID=ENV["AZ_CLIENT_ID"]
+- AZ_CLIENT_SECRET=ENV["AZ_CLIENT_SECRET"]
+- AZ_LOCATION=ENV["AZ_LOCATION"]
+
+You can export it executing the next command:
+
+```
+export VARIABLE="value"
+```
+
+# Create the Vagrant file
+
+```
+cp -p vagrantfiles/Vagrantfile.azure Vagrantfile
+```
+
+
+# Launching Vagrant Azure
+
+1- Edit hiera/default:
+```
+nameresolution: 'script' ======> nameresolution: 'azure'
+```
+
+2- Vagrant up:
+
+```
+vagrant up --provider=azure --no-provision --no-parallel
+```
+
+3- Exec the az_hosts.sh script:
+When vagrant up is finished, you need to launch this script for create the /etc/hosts.
+
+```
+bash az_hosts.sh
+```
+
+4- Run rsync:
+
+```
+vagrant rsync
+```
+
+5- Run the provision:
+
+```
+vagrant provision
+```
+
+NOTE: This phase can take a long time, so you can go for a coffee and take a break.
 
 # Optional:  Enabling Free IPA
 
