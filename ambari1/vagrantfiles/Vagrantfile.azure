@@ -18,6 +18,7 @@ Vagrant.configure('2') do |config|
   config.ssh.private_key_path = '~/.ssh/id_rsa'
   config.ssh.forward_agent = true
   config.vm.boot_timeout = '120'
+  config.vm.box_url = "https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box"
   config.vm.box = 'azure'
   config.ssh.insert_key = true
   config.vm.provision :shell, :path => "bootstrap.sh"
