@@ -10,6 +10,6 @@ echo "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdom
 echo "::1         localhost localhost.localdomain localhost6 localhost6.localdomain6" >> ~/git/keedio-vagrant/ambari1/files/az_hosts
 
 cat /tmp/az_hosts |awk -F" " '{print $2 "\t" $1".keedio.local""\t" $1}' >> ~/git/keedio-vagrant/ambari1/files/az_hosts
-cat /tmp/az_hosts |awk -F" " '{print $3 "\t" $1".kds.local""\t" $1}' >> ~/git/keedio-vagrant/ambari1/files/az_hosts
+cat /tmp/az_hosts |awk -F" " '{print $3 "\t" $1".kds.local""\t"}' >> ~/git/keedio-vagrant/ambari1/files/az_hosts
 
 rm -f /tmp/az_hosts
