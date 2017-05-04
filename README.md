@@ -216,6 +216,7 @@ In order to use Vagrant, you will need to write some variables on the Vagrant fi
 - AWS_KEYPAIR_NAME (MyKeyPair)
 - AWS_SSH_PRIVATE_KEY_PATH (path to your id_rsa)
 - AWS_REGION OR AWS_DEFAULT_REGION
+- AWS_SESSION_TOKEN
 
 ## Launching Vagrant AWS
 
