@@ -132,58 +132,118 @@ And restart with
 ```
 vagrant resume
 ```
-# Keedio-vagrant on Azure
+# Keedio-vagrant on AWS
 
 ## Preliminary steps
 
-For use Azure for deployment you need the following things:
+For use AWS for deployment you need the following things:
 
-- At least a trial account on Microsoft Azure.
-- Install Azure-cli (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-- Install the Vagrant plugin for Azure
+- An account on Amazon Web Services.
+- Install aws-cli (http://docs.aws.amazon.com/cli/latest/userguide/installing.html)
+- Install the Vagrant plugin for AWS
 
-## Installing Azure CLI
+## Installing AWS-CLI
 
-You can try install it with the Microsoft install notes for Azure CLI (strongly recommended):
-
-```
-curl -L https://aka.ms/InstallAzureCli | bash
-```
-You must restart the shell:
+We strongly recommended to follow the installation guide from AWS doc (see the url).
+If you had pip already installed:
 
 ```
-exec -l $SHELL
+pip install --upgrade --user awscli
 ```
-
-## Configuring Azure CLI
-
-In order to interact with Azure machines, we'll need to do login in our Azure's account. Execute the next command and follow the steps printed on the screen:
+For install pip:
 
 ```
-az login
+curl -O https://bootstrap.pypa.io/get-pip.py
+python3 get-pip.py --user
 ```
-
-If you want to be sure that it have been logged:
-
-```
-az account list
-```
-
-## Generating keys for Azure deployments
-
-The Azure provider seems to only like PEM files with both the public and private keys, and X509 certificates, so let’s get us some of that:
+For add the AWS-CLI executable to your command line path, add the export command to profile script:
 
 ```
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ~/.ssh/azurevagrant.key -out ~/.ssh/azurevagrant.key
-chmod 600 ~/.ssh/azurevagrant.key
-openssl x509 -inform pem -in ~/.ssh/azurevagrant.key -outform der -out ~/.ssh/azurevagrant.cer
+export PATH=~/.local/bin:$PATH
 ```
-The .cer file contains our public key, but the .pem file contains both our public and private keys, so we’ll need to secure it appropriately.
-Now we can upload that .cer file as a management certificate in Azure using the browser.
 
-# Know problems
+Then, load the profile into your current session:
 
-If you delete VMs in horizon, vagrant will enter an invalid state and you will be forced to start from scratch. 
+```
+source ~/.bash_profile
+```
+
+## Configuring AWS-CLI
+
+In order to interact with AWS, we'll need to get AWS tokens. Execute the next command and follow keep safe the tokens printed on the screen:
+
+```
+aws sts get-session-token
+```
+
+## Install the AWS Vagrant plugin
+
+```
+vagrant plugin install vagrant-aws
+```
+
+## Getting the security group id
+You can use the default group, it is all open:
+
+```
+aws ec2 describe-security-groups --group-names default |grep GroupId
+```
+
+## Create keypair
+You will need also a keypair on AWS, take a look to the next URL for learn how to create it on AWS: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html
+You can create it from CLI:
+
+```
+aws ec2 create-key-pair --key-name MyKeyPair
+```
+
+You need to save the output to a file.
+
+## Exporting the ENV variables
+In order to use Vagrant, you will need to export some variables:
+
+- AWS_INSTANCE_TYPE (default is t2.medium)
+- AWS_VPC_SUBNET_ID
+- AWS_VPC_SECURITY_GROUP (format is: ["groupId"])
+- AWS_ACCESS_KEY_ID (get on token-session)
+- AWS_SECRET_ACCESS_KEY
+- AWS_KEYPAIR_NAME (MyKeyPair)
+- AWS_SSH_PRIVATE_KEY_PATH (path to your id_rsa)
+- AWS_REGION OR AWS_DEFAULT_REGION
+
+You can export it in your CLI like this:
+
+```
+export VARIABLE="value"
+```
+
+## Launching Vagrant AWS
+
+1- Vagrant up:
+
+```
+vagrant up --provider=aws --no-provision
+```
+
+2- Exec the aws_hosts.sh script:
+When vagrant up is finished, you need to launch this script for create the /etc/hosts.
+
+```
+bash aws_hosts.sh
+```
+
+3- Run rsync:
+
+```
+vagrant rsync
+```
+
+4- Run the provision:
+
+```
+vagrant provision
+```
+
 
 # Optional:  Enabling Free IPA
 
