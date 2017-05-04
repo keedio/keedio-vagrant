@@ -218,6 +218,12 @@ In order to use Vagrant, you will need to write some variables on the Vagrant fi
 - AWS_REGION OR AWS_DEFAULT_REGION
 - AWS_SESSION_TOKEN
 
+You can also export it like ENV variables:
+
+```
+export VARIABLE="value"
+```
+
 ## Launching Vagrant AWS
 
 1- Vagrant up:
@@ -245,6 +251,7 @@ vagrant rsync
 vagrant provision
 ```
 
+NOTE: This phase can take a long time, so you can go for a coffee and take a break. 
 
 # Optional:  Enabling Free IPA
 
