@@ -21,7 +21,8 @@ Vagrant.configure('2') do |config|
   config.vm.box = 'azure'
   config.ssh.insert_key = true
   config.vm.provision :shell, :path => "bootstrap.sh"
-  config.vm.provider :azure do |azure|
+  config.vm.provider :azure do |azure, override|
+ 	override.ssh.username = 'centos'
         azure.subscription_id = ENV["AZ_SUBCRIPTION_ID"]
 	azure.tenant_id = ENV["AZ_TENANT_ID"]
     	azure.client_id = ENV["AZ_CLIENT_ID"]
