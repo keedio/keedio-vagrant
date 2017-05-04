@@ -22,8 +22,11 @@ ipa:     false
 #  
 # Specify the name resolution method
 # static: A precompiled file is copied in /etc/hosts (Default for Virtualbox)
-# script: The post-installation script Azure-hosts needs to be manually executed (Default for Azure)  
-nameresolution: 'script'
+# script: The post-installation script Azure-hosts needs to be manually executed (Unused)  
+# aws: The post-installation script aws_hosts needs to be manually executed (Default for aws)
+# azure: The post-installation script az_hosts needs to be manually executed (Default for Azure)
+nameresolution: 'azure'
+
 #
 # Specify the ambary backend database
 # default: the default db shipped with ambari (postgres) 
@@ -47,3 +50,4 @@ set_subdomain: 'ambari'
 set_realm: 'KEEDIO.ORG'
 # set master here for multiclustering
 set_master: 'master' 
+
