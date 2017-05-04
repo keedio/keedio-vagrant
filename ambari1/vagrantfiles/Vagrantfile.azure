@@ -1,0 +1,90 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+AZ_VM_SIZE=ENV["AZ_VM_SIZE"] || "Standard_D1_v2"
+AZ_RESOURCE_GROUP_NAME=ENV["AZ_RESOURCE_GROUP_NAME"] || "KDSRG"
+AZ_KEYPAIR_PATH=ENV["AZ_KEYPAIR_PATH"]
+AZ_SUBCRIPTION_ID=ENV["AZ_SUBCRIPTION_ID"]
+AZ_TENANT_ID=ENV["AZ_TENANT_ID"]
+AZ_CLIENT_ID=ENV["AZ_CLIENT_ID"]
+AZ_CLIENT_SECRET=ENV["AZ_CLIENT_SECRET"]
+AZ_LOCATION=ENV["AZ_LOCATION"]
+
+
+Vagrant.configure('2') do |config|
+  config.ssh.private_key_path = '~/.ssh/id_rsa'
+  config.ssh.forward_agent = true
+  config.vm.boot_timeout = '120'
+  config.vm.box = 'azure'
+  config.ssh.insert_key = true
+  config.vm.provision :shell, :path => "bootstrap.sh"
+  config.vm.provider :azure do |azure|
+        azure.subscription_id = ENV["AZ_SUBCRIPTION_ID"]
+	azure.tenant_id = ENV["AZ_TENANT_ID"]
+    	azure.client_id = ENV["AZ_CLIENT_ID"]
+    	azure.client_secret = ENV["AZ_CLIENT_SECRET"]
+
+	azure.resource_group_name = ENV["AZ_RESOURCE_GROUP_NAME"]
+	azure.vm_size = ENV["AZ_VM_SIZE"]
+        azure.vm_password = 'Recomputation1' # min 8 characters. should contain a lower case letter, an uppercase letter, a number and a special character
+        azure.vm_name = 'KDSVM' # max 15 characters. contains letters, number and hyphens. can start with letters and can end with letters and numbers
+	azure.location = ENV["AZ_LOCATION"] # e.g., West US
+	azure.vm_image_urn = 'OpenLogic:CentOS:6.8:latest'
+	azure.subnet_name = 'KDSnet'
+	azure.tcp_endpoints = 8080
+ end
+
+ config.vm.define 'KDSMaster' do |cfg|
+	cfg.vm.provider :azure do |azure, override|
+	azure.vm_name = 'KDSMaster'
+	end
+ end
+
+ config.vm.define 'KDSNode1' do |cfg|
+        cfg.vm.provider :azure do |azure, override|
+        azure.vm_name = 'KDSNode1'
+        end
+ end
+
+ config.vm.define 'KDSNode2' do |cfg|
+        cfg.vm.provider :azure do |azure, override|
+        azure.vm_name = 'KDSNode2'
+        end
+ end
+
+ config.vm.define 'KDSNode3' do |cfg|
+        cfg.vm.provider :azure do |azure, override|
+        azure.vm_name = 'KDSNode3'
+        end
+ end
+
+ config.vm.define 'KDSNode4' do |cfg|
+        cfg.vm.provider :azure do |azure, override|
+        azure.vm_name = 'KDSNode4'
+        end
+ end
+
+# TO ADD EXTRA NODES UNCOMMENT THE FOLLOWING LINES
+# config.vm.define 'KDSNode5' do |cfg|
+#        cfg.vm.provider :azure do |azure, override|
+#        azure.vm_name = 'KDSNode5'
+#        end
+# end
+
+# config.vm.define 'KDSNode6' do |cfg|
+#        cfg.vm.provider :azure do |azure, override|
+#        azure.vm_name = 'KDSNode6'
+#        end
+# end
+   config.vm.provision :puppet,
+     :options => ["--fileserverconfig=/vagrant/fileserver.conf","--pluginsync","--templatedir","/vagrant/templates"],
+     :facter => { "fqdn" => "vagrant.vagrantup.com" } do |puppet|
+     puppet.manifests_path = "manifests"
+     puppet.module_path = "manifests/modules"
+     puppet.manifest_file  = "init.pp"
+     puppet.hiera_config_path = "hiera.yaml"
+   end
+end
