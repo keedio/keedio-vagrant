@@ -218,6 +218,13 @@ export VARIABLE="value"
 ```
 
 ## Launching Vagrant AWS
+The first step is copy the vagrantfile to the main directory:
+
+```
+cp -p vagrantfiles/Vagrantfile.aws Vagrantfile
+```
+
+Then you can follow this:
 
 1- Vagrant up:
 
