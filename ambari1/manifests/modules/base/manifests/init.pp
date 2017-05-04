@@ -50,7 +50,25 @@ File { owner => 0, group => 0, mode => 0644 }
          mode   =>  0644
     } 
  }
- 
+
+ if hiera(nameresolution) == 'aws' {
+    file{'/etc/hosts':
+         ensure => file,
+         source => 'puppet:///files/aws_hosts',
+         owner  => 'root',
+         mode   =>  0644
+    }
+ } 
+
+ if hiera(nameresolution) == 'azure' {
+    file{'/etc/hosts':
+         ensure => file,
+         source => 'puppet:///files/az_hosts',
+         owner  => 'root',
+         mode   =>  0644
+    }
+ }
+
 if hiera(nameresolution) == 'script' {
      contain host-manager
  }  
