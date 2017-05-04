@@ -199,8 +199,14 @@ aws ec2 create-key-pair --key-name MyKeyPair
 
 You need to save the output to a file.
 
+## Create the Vagrantfile
+
+```
+cp -p vagrantfiles/Vagrantfile.aws Vagrantfile
+```
+
 ## Exporting the ENV variables
-In order to use Vagrant, you will need to export some variables:
+In order to use Vagrant, you will need to write some variables on the Vagrant file:
 
 - AWS_INSTANCE_TYPE (default is t2.medium)
 - AWS_VPC_SUBNET_ID
@@ -211,20 +217,7 @@ In order to use Vagrant, you will need to export some variables:
 - AWS_SSH_PRIVATE_KEY_PATH (path to your id_rsa)
 - AWS_REGION OR AWS_DEFAULT_REGION
 
-You can export it in your CLI like this:
-
-```
-export VARIABLE="value"
-```
-
 ## Launching Vagrant AWS
-The first step is copy the vagrantfile to the main directory:
-
-```
-cp -p vagrantfiles/Vagrantfile.aws Vagrantfile
-```
-
-Then you can follow this:
 
 1- Vagrant up:
 
