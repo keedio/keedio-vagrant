@@ -226,26 +226,31 @@ export VARIABLE="value"
 
 ## Launching Vagrant AWS
 
-1- Vagrant up:
+1- Edit hiera/default:
+```
+nameresolution: 'script' ======> nameresolution: 'aws'
+```
+
+2- Vagrant up:
 
 ```
 vagrant up --provider=aws --no-provision
 ```
 
-2- Exec the aws_hosts.sh script:
+3- Exec the aws_hosts.sh script:
 When vagrant up is finished, you need to launch this script for create the /etc/hosts.
 
 ```
 bash aws_hosts.sh
 ```
 
-3- Run rsync:
+4- Run rsync:
 
 ```
 vagrant rsync
 ```
 
-4- Run the provision:
+5- Run the provision:
 
 ```
 vagrant provision
