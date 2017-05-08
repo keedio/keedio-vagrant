@@ -30,7 +30,7 @@
   }
 
 
-  node 'master', 'master2', 'isban1' {
+  node 'master', 'master2', 'isban1', 'kdsmaster', 'AWSKDSMaster' {
   include local-repo
   include mysql-ambari
   include ipa::server
