@@ -2,8 +2,7 @@
 
 #This script creates a custom /etc/hosts for Azure Vagrant nodes.
 
-echo "Keedio-Vagrant location:"
-read location
+location="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #Get all the IP's internal and public
 
