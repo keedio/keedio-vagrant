@@ -39,46 +39,46 @@ Vagrant.configure('2') do |config|
 	azure.tcp_endpoints = 8080
  end
 
- config.vm.define 'KDSMaster' do |cfg|
+ config.vm.define 'kdsmaster' do |cfg|
 	cfg.vm.provider :azure do |azure, override|
-	azure.vm_name = 'KDSMaster'
+	azure.vm_name = 'kdsmaster'
 	end
  end
 
- config.vm.define 'KDSNode1' do |cfg|
+ config.vm.define 'kdsnode1' do |cfg|
         cfg.vm.provider :azure do |azure, override|
-        azure.vm_name = 'KDSNode1'
+        azure.vm_name = 'kdsnode1'
         end
  end
 
- config.vm.define 'KDSNode2' do |cfg|
+ config.vm.define 'kdsnode2' do |cfg|
         cfg.vm.provider :azure do |azure, override|
-        azure.vm_name = 'KDSNode2'
+        azure.vm_name = 'kdsnode2'
         end
  end
 
- config.vm.define 'KDSNode3' do |cfg|
+ config.vm.define 'kdsnode3' do |cfg|
         cfg.vm.provider :azure do |azure, override|
-        azure.vm_name = 'KDSNode3'
+        azure.vm_name = 'kdsnode3'
         end
  end
 
- config.vm.define 'KDSNode4' do |cfg|
+ config.vm.define 'kdsnode4' do |cfg|
         cfg.vm.provider :azure do |azure, override|
-        azure.vm_name = 'KDSNode4'
+        azure.vm_name = 'kdsnode4'
         end
  end
 
 # TO ADD EXTRA NODES UNCOMMENT THE FOLLOWING LINES
-# config.vm.define 'KDSNode5' do |cfg|
+# config.vm.define 'kdsnode5' do |cfg|
 #        cfg.vm.provider :azure do |azure, override|
-#        azure.vm_name = 'KDSNode5'
+#        azure.vm_name = 'kdsnode5'
 #        end
 # end
 
-# config.vm.define 'KDSNode6' do |cfg|
+# config.vm.define 'kdsnode6' do |cfg|
 #        cfg.vm.provider :azure do |azure, override|
-#        azure.vm_name = 'KDSNode6'
+#        azure.vm_name = 'kdsnode6'
 #        end
 # end
    config.vm.provision :puppet,
