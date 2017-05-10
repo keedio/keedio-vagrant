@@ -169,6 +169,13 @@ source ~/.bash_profile
 
 ## Configuring AWS-CLI
 
+First of all, you need to configure AWS:
+
+```
+aws configure
+```
+NOTE: Output format in Json.
+
 In order to interact with AWS, we'll need to get AWS tokens. Execute the next command and follow keep safe the tokens printed on the screen:
 
 ```
@@ -181,11 +188,23 @@ aws sts get-session-token
 vagrant plugin install vagrant-aws
 ```
 
+## Creating the security group
+
+You can change rules in the future:
+
+```
+aws ec2 create-security-group --group-name kdssg --description "Security group for KDS services"
+aws ec2 authorize-security-group-ingress --group-name kdssg --protocol udp  --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name kdssg --protocol tcp  --cidr 0.0.0.0/0
+
+```
+
+
 ## Getting the security group id
 You can use the default group, it is all open:
 
 ```
-aws ec2 describe-security-groups --group-names default |grep GroupId
+aws ec2 describe-security-groups --group-names kdssg |grep GroupId
 ```
 
 ## Create keypair
@@ -204,12 +223,18 @@ You need to save the output to a file.
 cp -p vagrantfiles/Vagrantfile.aws Vagrantfile
 ```
 
+## Moving the configuration.yaml file
+
+```
+cp -p configurations/configuration-aws.yaml hiera/configuration.yaml
+```
+
 ## Exporting the ENV variables
 In order to use Vagrant, you will need to write some variables on the Vagrant file:
 
 - AWS_INSTANCE_TYPE (default is t2.medium)
 - AWS_VPC_SUBNET_ID
-- AWS_VPC_SECURITY_GROUP (format is: ["groupId"])
+- AWS_VPC_SECURITY_GROUP
 - AWS_ACCESS_KEY_ID (get on token-session)
 - AWS_SECRET_ACCESS_KEY
 - AWS_KEYPAIR_NAME (MyKeyPair)
@@ -344,6 +369,11 @@ export VARIABLE="value"
 cp -p vagrantfiles/Vagrantfile.azure Vagrantfile
 ```
 
+## Moving the configuration.yaml file
+
+```
+cp -p configurations/configuration-aws.yaml hiera/configuration.yaml
+```
 
 # Launching Vagrant Azure
 
