@@ -226,7 +226,7 @@ cp -p vagrantfiles/Vagrantfile.aws Vagrantfile
 ## Moving the configuration.yaml file
 
 ```
-cp -p configurations/configuration-aws.yaml hiera/configuration.yaml
+cp -p configurations/configuration_aws.yaml hiera/configuration.yaml
 ```
 
 ## Exporting the ENV variables
@@ -372,7 +372,7 @@ cp -p vagrantfiles/Vagrantfile.azure Vagrantfile
 ## Moving the configuration.yaml file
 
 ```
-cp -p configurations/configuration-aws.yaml hiera/configuration.yaml
+cp -p configurations/configuration_az.yaml hiera/configuration.yaml
 ```
 
 # Launching Vagrant Azure
