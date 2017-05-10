@@ -2,7 +2,7 @@
 # Set here which repository you want to use for the deployments
 # public: repo.keedio.com
 # local: Local VM Buildoop 
-repo_address: 'norepo'
+repo_address: 'public'
 #
 # set the development variable to true if you are a Keedio developer 
 development: false  
@@ -18,36 +18,19 @@ deployment: ambari
 # Enable here free IPA installation
 # which includes LDAP and Kerberos
 # Important if you want your cluster securized 
-ipa:     false 
+ipa: false 
 #  
 # Specify the name resolution method
 # static: A precompiled file is copied in /etc/hosts (Default for Virtualbox)
-# script: The post-installation script Azure-hosts needs to be manually executed (Unused)  
-# aws: The post-installation script aws_hosts needs to be manually executed (Default for aws)
+# aws: The post-installation script aws_hosts (Default for AWS)
 # azure: The post-installation script az_hosts needs to be manually executed (Default for Azure)
-nameresolution: 'static'
+nameresolution: 'azure'
 
 #
 # Specify the ambary backend database
 # default: the default db shipped with ambari (postgres) 
 # mysql: mysql running on the master,  requires manual configuration
-ambaridb: 'default'
-#
-# Set it to true to disable repositories, this is useful when repos are already available on the system 
-disable_repos: false
-# Set here Satellite details
-satellite: true
-satellite_server: 'https://repo.keedio.com/XMLRPC'
-satellite_public_repo: 'http://repo.keedio.com/pub/spacewalk-client-el6'
-certificate_rpm: 'http://repo.keedio.com/pub/rhn-org-trusted-ssl-cert-1.0-2.noarch.rpm'
-certificate_name: 'rhn-org-trusted-ssl-cert-1.0-2'
-#
-# Set here the main domain name 
-set_domain: 'keedio.org' 
-# Set here the subdomain name
-set_subdomain: 'ambari'
-#set here the relam
-set_realm: 'KEEDIO.ORG'
-# set master here for multiclustering
-set_master: 'master' 
+ambaridb: 'default' 
 
+# set master here for multiclustering
+set_master: 'awskdsmaster'
