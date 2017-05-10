@@ -9,16 +9,16 @@ aws ec2 describe-instances   --query "Reservations[*].Instances[*].PrivateIpAddr
 
 AWSKDSMASTER=`head -1 /tmp/aws`
 
-echo "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 \n ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6" > $location/ambari1/files/aws_hosts
+echo "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 \n ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6" > $location/files/aws_hosts
 
-echo "$AWSKDSMASTER awskdsmaster.keedio.local awskdsmaster" >> $location/ambari1/files/aws_hosts
+echo "$AWSKDSMASTER awskdsmaster.keedio.local awskdsmaster" >> $location/files/aws_hosts
 
 sed '1d' /tmp/aws > /tmp/aws2
 
 i=1
 while read line
 do
- echo "$line awskdsnode$i.keedio.local awskdsnode$i" >> $location/ambari1/files/aws_hosts
+ echo "$line awskdsnode$i.keedio.local awskdsnode$i" >> $location/files/aws_hosts
  i=$(($i + 1))
 done < /tmp/aws2
 
