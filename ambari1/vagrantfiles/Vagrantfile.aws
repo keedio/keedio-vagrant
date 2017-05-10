@@ -44,68 +44,68 @@ Vagrant.configure('2') do |config|
  end
 end
 
- config.vm.define 'AWSKDSMaster' do |aws|
-	config.vm.hostname = 'AWSKDSMaster'
+ config.vm.define 'awskdsmaster' do |aws|
+	config.vm.hostname = 'awskdsmaster'
 	aws.vm.provider :aws do |aws, override|
 		aws.tags = {
-		    'Name' => 'AWSKDSMaster'
+		    'Name' => 'awskdsmaster'
 	}
-	aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=AWSKDSMaster/g' /etc/sysconfig/network"
-	aws.user_data = "#!/bin/bash\nhostname AWSKDSMaster"
+	aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=awskdsmaster/g' /etc/sysconfig/network"
+	aws.user_data = "#!/bin/bash\nhostname awskdsmaster"
 	end
  end
 
- config.vm.define 'AWSKDSNode1' do |aws|
+ config.vm.define 'awskdsnode1' do |aws|
         aws.vm.provider :aws do |aws, override|
                 aws.tags = {
-                    'Name' => 'AWSKDSNode1'
+                    'Name' => 'awskdsnode1'
 	}
-        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=AWSKDSNode1/g' /etc/sysconfig/network"
-        aws.user_data = "#!/bin/bash\nhostname AWSKDSNode1"
+        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=awskdsnode1/g' /etc/sysconfig/network"
+        aws.user_data = "#!/bin/bash\nhostname awskdsnode1"
         end
  end
 
- config.vm.define 'AWSKDSNode2' do |aws|
+ config.vm.define 'awskdsnode2' do |aws|
         aws.vm.provider :aws do |aws, override|
                 aws.tags = {
-                    'Name' => 'AWSKDSNode2'
+                    'Name' => 'awskdsnode2'
 	}
-        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=AWSKDSNode2/g' /etc/sysconfig/network"
-        aws.user_data = "#!/bin/bash\nhostname AWSKDSNode2"
+        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=awskdsnode2/g' /etc/sysconfig/network"
+        aws.user_data = "#!/bin/bash\nhostname awskdsnode2"
         end
  end
 
- config.vm.define 'AWSKDSNode3' do |aws|
+ config.vm.define 'awskdsnode3' do |aws|
         aws.vm.provider :aws do |aws, override|
                 aws.tags = {
-                    'Name' => 'AWSKDSNode3'
+                    'Name' => 'awskdsnode3'
 	}
-        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=AWSKDSNode3/g' /etc/sysconfig/network"
-        aws.user_data = "#!/bin/bash\nhostname AWSKDSNode3"
+        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=awskdsnode3/g' /etc/sysconfig/network"
+        aws.user_data = "#!/bin/bash\nhostname awskdsnode3"
         end
  end
 
- config.vm.define 'AWSKDSNode4' do |aws|
+ config.vm.define 'awskdsnode4' do |aws|
         aws.vm.provider :aws do |aws, override|
                 aws.tags = {
-                    'Name' => 'AWSKDSNode4'
+                    'Name' => 'awskdsnode4'
 	}
-        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=AWSKDSNode4/g' /etc/sysconfig/network"
-        aws.user_data = "#!/bin/bash\nhostname AWSKDSNode4"
+        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=awskdsnode4/g' /etc/sysconfig/network"
+        aws.user_data = "#!/bin/bash\nhostname awskdsnode4"
         end
  end
 # TO ADD EXTRA NODES UNCOMMENT THE FOLLOWING LINES
-# config.vm.define 'AWSKDSNode5' do |aws|
+# config.vm.define 'awskdsnode5' do |aws|
 #        aws.vm.provider :aws do |aws, override|
 #                aws.tags = {
-#                    'Name' => 'AWSKDSNode5'
+#                    'Name' => 'awskdsnode5'
 #	}        
 #	end
 # end
-# config.vm.define 'AWSKDSNode6' do |aws|
+# config.vm.define 'awskdsnode6' do |aws|
 #        aws.vm.provider :aws do |aws, override|
 #                aws.tags = {
-#                    'Name' => 'AWSKDSNode6'
+#                    'Name' => 'awskdsnode6'
 #	 }
 #        end
 # end 
