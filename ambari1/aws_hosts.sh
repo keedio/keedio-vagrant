@@ -5,22 +5,21 @@
 
 location="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-aws ec2 describe-instances   --query "Reservations[*].Instances[*].PrivateIpAddress" | grep .\" |sed 's/"/ /g' |sed 's/ //g'> /tmp/aws
+aws ec2 describe-instances |grep Value |awk -F"\"" '{printf $4 "\n"}' > /tmp/aws_names
+aws ec2 describe-instances |grep -i PrivateDnsName |sed 's/\./-/g' |awk -F"-" '{printf $2"."$3"."$4"."$5 "\n"}' > /tmp/aws_privateip
 
-AWSKDSMASTER=`head -1 /tmp/aws`
-
-echo "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 \n ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6" > $location/files/aws_hosts
-
-echo "$AWSKDSMASTER awskdsmaster.keedio.local awskdsmaster" >> $location/files/aws_hosts
-
-sed '1d' /tmp/aws > /tmp/aws2
+echo "127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4" > $location/files/aws_hosts
+echo "::1         localhost localhost.localdomain localhost6 localhost6.localdomain6" >> $location/files/aws_hosts
 
 i=1
 while read line
 do
- echo "$line awskdsnode$i.keedio.local awskdsnode$i" >> $location/files/aws_hosts
+ PIP=`head -"$i" /tmp/aws_privateip | tail -1`
+ echo $line
+ echo $PIP
+ echo "$PIP $line.keedio.local $line" >> $location/files/aws_hosts
  i=$(($i + 1))
-done < /tmp/aws2
+done < /tmp/aws_names
 
-rm -f /tmp/aws /tmp/aws2
+#rm -f /tmp/aws /tmp/aws2
 
