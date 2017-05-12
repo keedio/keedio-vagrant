@@ -15,8 +15,6 @@ i=1
 while read line
 do
  PIP=`head -"$i" /tmp/aws_privateip | tail -1`
- echo $line
- echo $PIP
  echo "$PIP $line.keedio.local $line" >> $location/files/aws_hosts
  i=$(($i + 1))
 done < /tmp/aws_names
