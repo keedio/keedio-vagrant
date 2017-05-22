@@ -11,12 +11,13 @@ AWS_INSTANCE_TYPE = ENV['AWS_INSTANCE_TYPE'] || "t2.medium"
 AWS_VPC_SUBNET_ID = ENV['AWS_VPC_SUBNET_ID']
 AWS_VPC_PRIVATE_IP = ENV['AWS_VPC_PRIVATE_IP']
 AWS_VPC_SECURITY_GROUP = ENV['AWS_VPC_SECURITY_GROUP']
+AWS_SSH_PRIVATE_KEY = ENV['AWS_SSH_PRIVATE_KEY']
 
 Vagrant.configure('2') do |config|
  config.vm.provider :aws do |aws, override|
   override.ssh.username = 'centos'
   override.ssh.forward_agent = true
-  override.ssh.private_key_path = '/Users/calvarez/.ssh/id_rsa'
+  override.ssh.private_key_path = ENV['AWS_SSH_PRIVATE_KEY']
 
   config.vm.boot_timeout = '300'
   config.vm.box_url = 'https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box'
