@@ -33,4 +33,4 @@ nameresolution: 'azure'
 ambaridb: 'default' 
 
 # set master here for multiclustering
-set_master: 'awskdsmaster'
+set_master: 'kdsmaster'
