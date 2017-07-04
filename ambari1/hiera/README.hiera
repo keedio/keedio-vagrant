@@ -1,1 +1,0 @@
-In this system we use hiera differently, instead of using it for data code separation, we use it to provide a simple configuration file for our cluster deployments.
