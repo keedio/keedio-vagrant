@@ -1,0 +1,12 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.65.101 master.ambari.keedio.org master
+192.168.65.102 ambari1.ambari.keedio.org ambari1
+192.168.65.103 ambari2.ambari.keedio.org ambari2
+192.168.65.104 ambari3.ambari.keedio.org ambari3
+192.168.65.105 ambari4.ambari.keedio.org ambari4
+192.168.65.106 ambari5.ambari.keedio.org ambari5
+192.168.65.107 ambari6.ambari.keedio.org ambari6
+192.168.65.108 ambari7.ambari.keedio.org ambari7
+192.168.65.109 ambari8.ambari.keedio.org ambari8
+192.168.65.110 ambari9.ambari.keedio.org ambari9

@@ -1,0 +1,6 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+10.0.0.4	kdsmaster.kds.local	kdsmaster
+10.0.0.5	kdsnode1.kds.local	kdsnode1
+13.74.170.18	kdsmaster.keedio.local	
+13.74.162.167	kdsnode1.keedio.local	

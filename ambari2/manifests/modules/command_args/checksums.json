@@ -1,0 +1,9 @@
+{
+  "Gemfile": "138eec90146ae71d06a58ce1de587de0",
+  "README.md": "babd5a63cad743f5164fb5b86103840b",
+  "Rakefile": "3ad0846c721edf3c5a2d1411a32de425",
+  "lib/puppet/parser/functions/command_args.rb": "b300e2958f473c74c4e3dfc7c395d6be",
+  "metadata.json": "210ea38198561ccfbb37606bcc4e1fa7",
+  "spec/spec_helper.rb": "792eeb7aa7edafb93e2bc1d27c5e75c5",
+  "spec/unit/puppet/parser/functions/command_args_spec.rb": "6f5f3a13b6741b4be81e830586ccb461"
+}

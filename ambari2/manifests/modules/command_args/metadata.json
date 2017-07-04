@@ -1,0 +1,31 @@
+{
+  "name": "pcfens-command_args",
+  "version": "0.1.0",
+  "author": "pcfens",
+  "summary": "Convert a hash into command line arguments.",
+  "license": "Apache-2.0",
+  "source": "https://github.com/pcfens/puppet-command_args",
+  "project_page": "https://github.com/pcfens/puppet-command_args",
+  "issues_url": "https://github.com/pcfens/puppet-command_args/issues",
+  "dependencies": [
+  
+  ],
+  "description": "A module to convert a hash into command line arguments.",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5.0",
+        "6.0",
+        "7.0"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
+      ]
+    }
+  ]
+}
