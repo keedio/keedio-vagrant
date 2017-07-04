@@ -1,0 +1,123 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Require the AWS provider plugin
+require 'vagrant-aws'
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+AWS_INSTANCE_TYPE = ENV['AWS_INSTANCE_TYPE'] || "t2.medium"
+AWS_VPC_SUBNET_ID = ENV['AWS_VPC_SUBNET_ID']
+AWS_VPC_PRIVATE_IP = ENV['AWS_VPC_PRIVATE_IP']
+AWS_VPC_SECURITY_GROUP = ENV['AWS_VPC_SECURITY_GROUP']
+AWS_SSH_PRIVATE_KEY = ENV['AWS_SSH_PRIVATE_KEY']
+
+Vagrant.configure('2') do |config|
+ config.vm.provider :aws do |aws, override|
+  override.ssh.username = 'centos'
+  override.ssh.forward_agent = true
+  override.ssh.private_key_path = ENV['AWS_SSH_PRIVATE_KEY']
+
+  config.vm.boot_timeout = '60'
+  config.vm.box_url = 'https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box'
+  config.vm.box = 'dummy'
+  config.ssh.insert_key = true
+  config.vm.provision :shell, :path => 'bootstrap.sh'
+  config.vm.provider :aws do |aws, overrride|
+
+	aws.session_token = ENV["AWS_SESSION_TOKEN"]
+        aws.access_key_id = ENV["AWS_ACCESS_KEY_ID"]
+        aws.secret_access_key = ENV["AWS_SECRET_ACCESS_KEY"]
+        aws.keypair_name = ENV["AWS_KEYPAIR_NAME"]
+        override.ssh.private_key_path = ENV["AWS_SSH_PRIVATE_KEY_PATH"]
+        aws.region = ENV['AWS_REGION'] || ENV['AWS_DEFAULT_REGION'] || "us-west-2"
+  	
+	aws.associate_public_ip = 'true'
+	aws.subnet_id = ENV['AWS_VPC_SUBNET_ID']
+	aws.ssh_host_attribute = :public_ip_address
+    	aws.ami = 'ami-11749068'
+	aws.instance_type = ENV['AWS_INSTANCE_TYPE'] || "t2.medium"
+	aws.instance_ready_timeout = 300
+        aws.security_groups = ENV['AWS_VPC_SECURITY_GROUP']
+	aws.user_data = "#!/bin/bash\necho 'Defaults:centos !requiretty' > /etc/sudoers.d/999-vagrant-cloud-init-requiretty && chmod 440 /etc/sudoers.d/999-vagrant-cloud-init-requiretty\n"
+	aws.user_data = "#!/bin/bash\nsed -i -e 's/^Defaults.*requiretty/# Defaults requiretty/g' /etc/sudoers"
+ end
+end
+
+ config.vm.define 'kdsmaster' do |aws|
+	config.vm.hostname = 'kdsmaster'
+	aws.vm.provider :aws do |aws, override|
+		aws.tags = {
+		    'Name' => 'kdsmaster'
+	}
+	aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=kdsmaster.kds.local/g' /etc/sysconfig/network"
+	aws.user_data = "#!/bin/bash\nhostnamectl set-hostname kdsmaster.kds.local --static"
+	end
+ end
+
+ config.vm.define 'kdsnode1' do |aws|
+        aws.vm.provider :aws do |aws, override|
+                aws.tags = {
+                    'Name' => 'kdsnode1'
+	}
+        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=kdsnode1.kds.local/g' /etc/sysconfig/network"
+        aws.user_data = "#!/bin/bash\nhostnamectl set-hostname kdsnode1.kds.local --static"
+        end
+ end
+
+ config.vm.define 'kdsnode2' do |aws|
+        aws.vm.provider :aws do |aws, override|
+                aws.tags = {
+                    'Name' => 'kdsnode2'
+	}
+        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=kdsnode2/g' /etc/sysconfig/network"
+        aws.user_data = "#!/bin/bash\nhostname kdsnode2"
+        end
+ end
+
+ config.vm.define 'kdsnode3' do |aws|
+        aws.vm.provider :aws do |aws, override|
+                aws.tags = {
+                    'Name' => 'kdsnode3'
+	}
+        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=kdsnode3/g' /etc/sysconfig/network"
+        aws.user_data = "#!/bin/bash\nhostname kdsnode3"
+        end
+ end
+
+ config.vm.define 'kdsnode4' do |aws|
+        aws.vm.provider :aws do |aws, override|
+                aws.tags = {
+                    'Name' => 'kdsnode4'
+	}
+        aws.user_data = "#!/bin/bash\nsed -i -e 's/^HOSTNAME=.*internal/HOSTNAME=kdsnode4/g' /etc/sysconfig/network"
+        aws.user_data = "#!/bin/bash\nhostname kdsnode4"
+        end
+ end
+
+# TO ADD EXTRA NODES UNCOMMENT THE FOLLOWING LINES
+# config.vm.define 'kdsnode5' do |aws|
+#        aws.vm.provider :aws do |aws, override|
+#                aws.tags = {
+#                    'Name' => 'kdsnode5'
+#	}        
+#	end
+# end
+# config.vm.define 'kdsnode6' do |aws|
+#        aws.vm.provider :aws do |aws, override|
+#                aws.tags = {
+#                    'Name' => 'kdsnode6'
+#	 }
+#        end
+# end 
+
+ config.vm.provision :puppet,
+     :options => ["--fileserverconfig=/vagrant/fileserver.conf","--pluginsync","--templatedir","/vagrant/templates"],
+     :facter => { "fqdn" => "vagrant.vagrantup.com" } do |puppet|
+     puppet.manifests_path = "manifests"
+     puppet.module_path = "manifests/modules"
+     puppet.manifest_file  = "init.pp"
+     puppet.hiera_config_path = "hiera.yaml"
+   end
+end

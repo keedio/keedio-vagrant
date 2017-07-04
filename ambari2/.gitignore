@@ -1,0 +1,8 @@
+.vagrant/*
+disks/*
+logs/*
+Vagrantfile
+hiera/configuration.yaml
+hiera/secure.eyaml
+manifests/modules/host-manager/manifests/init.pp
+files/ssh-backup/
